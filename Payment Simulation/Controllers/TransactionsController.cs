@@ -95,6 +95,12 @@ namespace Payment_Simulation.Controllers
             return View(transactions);
         }
 
+        [HttpPost]
+        public async Task<PaymentOrderDTO> MakeTransaction()
+        {
+
+        }
+
 
 
         /// <summary>
