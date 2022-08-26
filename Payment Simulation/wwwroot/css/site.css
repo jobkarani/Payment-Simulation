@@ -1,0 +1,90 @@
+html {
+    font-size: 20px;
+    font-family: Open Sans;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+body html {
+    margin: 0%;
+    padding: 0%;
+}
+body {
+    background-color: #f6f9fc;
+}
+a.navbar-brand > img {
+    width: 20%;
+    height: 1%;
+}
+ul li {
+    width:30%;
+}
+ul li .nav-link {
+    color: #2c0d63;
+}
+ul li a.nav-link:hover  {
+    color: #d09e29;
+}
+h1 {
+    color: #d09e29;
+    text-align:center;
+}
+.form {
+    width: 50%;
+    border:none;
+    /*border: 1px solid #d09e29;*/
+    margin-left: 25%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    padding-right: 3%;
+    padding-left: 3%;
+    box-shadow: .5px 5px 5px 1px grey;
+    background-color: #ffff;
+}
+.form-control {
+    box-shadow: .3px 3px 3px 1px #d09e29;
+    /* border: 1px solid #d09e29;*/
+    text-align: center;
+    height: 3rem;
+}
+.form-group {
+    margin-top: 3%;
+    
+}
+.btn-one {
+    background-color: #2c0d63;
+    color: white;
+    font-weight: 600;
+}
+    .btn-one:hover {
+        color: #d09e29;
+    }
+.btn-two {
+    margin-top:5%;
+    background-color: #d09e29;
+    color: white;
+    font-weight:600;
+    margin-left:86%;
+}
+.tab {
+    margin-top: 2%;
+    margin-bottom: 5%;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    border: none;
+    box-shadow: 5px 5px 5px 1px grey;
+    /*border: 1px solid #d09e29;*/
+    padding-top: 5%;
+    padding-bottom: 5%;
+    padding-right: 3%;
+    padding-left: 3%;
+    background-color: #ffff;
+}
+.navbar{
+    box-shadow:2px 2px 2px 1px grey;
+}
