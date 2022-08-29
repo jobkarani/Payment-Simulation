@@ -9,9 +9,9 @@ using Payment_Simulation.Services;
 
 namespace Payment_Simulation.configAutoMapper
 {
-    public class AutoMapper : Profile
+    public class AutoMapperProfile : Profile
     {
-        public AutoMapper()
+        public AutoMapperProfile()
         {
             CreateMap<Transactions, PaymentOrderDTO>();
         }
