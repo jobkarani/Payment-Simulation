@@ -75,6 +75,16 @@ namespace Payment_Simulation.Controllers
         }
 
 
+        //Gets all Transactions
+        [HttpGet]
+        [ProducesResponseType(typeof(PaymentOrderDTO), 200)]
+        public IActionResult GetAllTransactions()
+        {
+            var transactions = _context.Transactions.ToList();
+            var transactionDtos = _mapper.Map<List<PaymentOrderDTO>>(transactions);
+
+            return Ok(transactionDtos);
+        }
 
         // GET: Transactions/Create
         public IActionResult Create()
