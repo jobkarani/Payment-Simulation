@@ -4,15 +4,15 @@ namespace Payment_Simulation.Models
 {
     public class Remitter: ValueObject
     {
-        [Required]
+        [Required(ErrorMessage = "Name is Required")]
         [StringLength(20)]
         public string name { get; private set; }
-        [Required]
+        [Required(ErrorMessage = "Address is Required")]
         public string address { get; private set; }
-        [Required]
+        [Required(ErrorMessage = "Phone Number is Required")]
         [StringLength(12)]
         public string phoneNumber { get; private set; }
-        [Required]
+        [Required(ErrorMessage = "ID Number is Required")]
         [StringLength(8)]
         public string idNumber { get; private set; }
 

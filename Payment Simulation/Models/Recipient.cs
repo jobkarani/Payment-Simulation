@@ -4,24 +4,24 @@ namespace Payment_Simulation.Models
 {
     public class Recipient: ValueObject
     {
-        [Required]
+        [Required(ErrorMessage = "Name is Required")]
         [StringLength(20)]
         public string name { get; private set; }
-        [Required]
+        [Required(ErrorMessage = "Address is Required")]
         public string address { get; private set; }
-        [Required]
+        [Required(ErrorMessage = "Email is Required")]
         [StringLength(40)]
         public string emailAddress { get; private set; }
-        [Required]
+        [Required(ErrorMessage = "Phone Number is Required")]
         [StringLength(12)]
         public string phoneNumber { get; private set; }
-        [Required]
+        [Required(ErrorMessage = "ID Number is Required")]
         [StringLength(8)]
         public string idNumber { get; private set; }
-        [Required]
+        [Required(ErrorMessage = "Bank is Required")]
         [StringLength(20)]
         public string financialInstitution { get; private set; }
-        [Required]
+        [Required(ErrorMessage = "Account Number is Required")]
         [StringLength(13)]
         public string primaryAccountNumber { get; private set; }
 
