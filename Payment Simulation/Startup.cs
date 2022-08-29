@@ -23,11 +23,7 @@ namespace Payment_Simulation
             builder.Services.AddDbContext<TransactionsSimulation>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultDbConnection") ?? throw new InvalidOperationException("Connection string 'DefaultDbConnection' not found.")));
 
-            var mapperConfig = new MapperConfiguration(mc => {
-                mc.AddProfile(new MappingProfile());
-            });
-            IMapper mapper = mapperConfig.CreateMapper();
-            builder.Services.AddSingleton(mapper);
+            builder.Services.AddAutoMapper(typeof(Startup));
 
         }
         public static void Configure(WebApplication app)
