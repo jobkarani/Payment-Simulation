@@ -95,12 +95,12 @@ namespace Payment_Simulation.Controllers
             return View(transactions);
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public async Task<PaymentOrderDTO> MakeTransaction()
         {
 
         }
-
+*/
 
 
         /// <summary>
@@ -146,12 +146,12 @@ namespace Payment_Simulation.Controllers
             foreach (var route in items.routes)
             {
 
-                foreach (var channel in route.channelTypes)
+                foreach (var x in route.channelTypes)
                 {
                     ChannelTypeDTO selectItem = new ChannelTypeDTO()
                     {
-                        Text = channel.channelDescription,
-                        channelType = channel.channelType.ToString(),
+                        Text = x.channelDescription,
+                        channelType = x.channelType.ToString(),
                         Value = route.id.ToString()
                     };
 

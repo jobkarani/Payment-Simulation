@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Payment_Simulation.Data;
 
@@ -10,9 +11,10 @@ using Payment_Simulation.Data;
 namespace Payment_Simulation.Migrations
 {
     [DbContext(typeof(TransactionsSimulation))]
-    partial class TransactionsSimulationModelSnapshot : ModelSnapshot
+    [Migration("20220829081424_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,33 +68,27 @@ namespace Payment_Simulation.Migrations
 
                             b1.Property<string>("emailAddress")
                                 .IsRequired()
-                                .HasMaxLength(40)
-                                .HasColumnType("nvarchar(40)");
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("financialInstitution")
                                 .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("nvarchar(20)");
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("idNumber")
                                 .IsRequired()
-                                .HasMaxLength(8)
-                                .HasColumnType("nvarchar(8)");
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("name")
                                 .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("nvarchar(20)");
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("phoneNumber")
                                 .IsRequired()
-                                .HasMaxLength(12)
-                                .HasColumnType("nvarchar(12)");
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("primaryAccountNumber")
                                 .IsRequired()
-                                .HasMaxLength(13)
-                                .HasColumnType("nvarchar(13)");
+                                .HasColumnType("nvarchar(max)");
 
                             b1.HasKey("TransactionsId");
 
@@ -111,20 +107,16 @@ namespace Payment_Simulation.Migrations
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.Property<string>("idNumber")
-                                .IsRequired()
-                                .HasMaxLength(8)
-                                .HasColumnType("nvarchar(8)");
+                            b1.Property<int>("idNumber")
+                                .HasColumnType("int");
 
                             b1.Property<string>("name")
                                 .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("nvarchar(20)");
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("phoneNumber")
                                 .IsRequired()
-                                .HasMaxLength(12)
-                                .HasColumnType("nvarchar(12)");
+                                .HasColumnType("nvarchar(max)");
 
                             b1.HasKey("TransactionsId");
 

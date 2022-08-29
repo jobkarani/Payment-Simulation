@@ -1,13 +1,28 @@
-﻿namespace Payment_Simulation.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Payment_Simulation.Models
 {
     public class Recipient: ValueObject
     {
+        [Required]
+        [StringLength(20)]
         public string name { get; private set; }
+        [Required]
         public string address { get; private set; }
+        [Required]
+        [StringLength(40)]
         public string emailAddress { get; private set; }
+        [Required]
+        [StringLength(12)]
         public string phoneNumber { get; private set; }
+        [Required]
+        [StringLength(8)]
         public string idNumber { get; private set; }
+        [Required]
+        [StringLength(20)]
         public string financialInstitution { get; private set; }
+        [Required]
+        [StringLength(13)]
         public string primaryAccountNumber { get; private set; }
 
         public Recipient() { }

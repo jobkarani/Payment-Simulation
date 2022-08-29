@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -15,11 +14,11 @@ namespace Payment_Simulation.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    originatorConversationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    originatorConversationId = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
                     amount = table.Column<float>(type: "real", nullable: false),
                     reference = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     channelType = table.Column<int>(type: "int", nullable: false),
-                    customerAccountNo = table.Column<int>(type: "int", nullable: false),
+                    customerAccountNo = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
                     Remitter_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Remitter_address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Remitter_phoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
