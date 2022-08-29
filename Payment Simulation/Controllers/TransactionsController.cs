@@ -7,16 +7,19 @@ using Payment_Simulation.Services;
 using System.Linq.Dynamic.Core;
 using RestSharp;
 using Newtonsoft.Json;
+using AutoMapper;
 
 namespace Payment_Simulation.Controllers
 {
     public class TransactionsController : Controller
     {
         private readonly TransactionsSimulation _context;
+        private readonly IMapper _mapper;
 
-        public TransactionsController(TransactionsSimulation context)
+        public TransactionsController(TransactionsSimulation context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: Transactions/Table
@@ -87,7 +90,7 @@ namespace Payment_Simulation.Controllers
             var token = GetToken();
 
             if (ModelState.IsValid)
-            {   
+            {
                 _context.Add(transactions);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -95,12 +98,7 @@ namespace Payment_Simulation.Controllers
             return View(transactions);
         }
 
-        /*[HttpPost]
-        public async Task<PaymentOrderDTO> MakeTransaction()
-        {
 
-        }
-*/
 
 
         /// <summary>
