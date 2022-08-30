@@ -6,7 +6,12 @@ namespace Payment_Simulation
 {
     public class Startup
     {
-      
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+        public IConfiguration Configuration { get; }
+
         public static WebApplication InitializeApp(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
