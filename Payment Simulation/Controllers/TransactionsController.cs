@@ -95,17 +95,42 @@ namespace Payment_Simulation.Controllers
         // POST: Transactions/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,originatorConversationId,amount,reference,channelType,customerAccountNo")] Transactions transactions)
+        public async Task<IActionResult> CreateTransaction([FromBody] TransactionsDTO transaction)
         {
+            Remitter domainRemitter = new Remitter();
+            domainRemitter.address = transaction.address;
+            domainRemitter.name = transaction.name;
+            domainRemitter.idNumber = transaction.phoneNumber;
+            domainRemitter.phoneNumber = transaction.phoneNumber;
+
+            Recipient domainRecipient = new Recipient();
+            domainRecipient.address = transaction.address;
+            domainRecipient.phoneNumber = transaction.phoneNumber;
+            domainRecipient.idNumber = transaction.idNumber;
+            domainRecipient.primaryAccountNumber = transaction.primaryAccountNumber;
+            domainRecipient.emailAddress = transaction.emailAddress;
+            domainRecipient.financialInstitution = transaction.financialInstitution;
+
+
+            Transactions domainTransaction = new Transactions();
+            domainTransaction.originatorConversationId   = transaction.originatorConversationId;
+            domainTransaction.amount = domainTransaction.amount;
+            domainTransaction.reference = domainTransaction.reference;
+            domainTransaction.channelType = domainTransaction.channelType;
+            domainTransaction.customerAccountNo = domainTransaction.customerAccountNo;
+            domainTransaction.Id = domainTransaction.Id;
+            domainTransaction.Remitter = domainRemitter;
+            domainTransaction.Recipient = domainRecipient;
+
             var token = GetToken();
 
             if (ModelState.IsValid)
             {
-                _context.Add(transactions);
+                _context.Add(transaction);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(transactions);
+            return View(transaction);
         }
 
 

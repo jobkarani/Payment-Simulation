@@ -6,24 +6,24 @@ namespace Payment_Simulation.Models
     {
         [Required(ErrorMessage = "Name is Required")]
         [StringLength(20)]
-        public string name { get; private set; }
+        public string name { get; set; }
         [Required(ErrorMessage = "Address is Required")]
-        public string address { get; private set; }
+        public string address { get; set; }
         [Required(ErrorMessage = "Email is Required")]
         [StringLength(40)]
-        public string emailAddress { get; private set; }
+        public string emailAddress { get; set; }
         [Required(ErrorMessage = "Phone Number is Required")]
         [StringLength(12)]
-        public string phoneNumber { get; private set; }
+        public string phoneNumber { get; set; }
         [Required(ErrorMessage = "ID Number is Required")]
         [StringLength(8)]
-        public string idNumber { get; private set; }
+        public string idNumber { get; set; }
         [Required(ErrorMessage = "Bank is Required")]
         [StringLength(20)]
-        public string financialInstitution { get; private set; }
+        public string financialInstitution { get; set; }
         [Required(ErrorMessage = "Account Number is Required")]
         [StringLength(13)]
-        public string primaryAccountNumber { get; private set; }
+        public string primaryAccountNumber { get; set; }
 
         public Recipient() { }
 

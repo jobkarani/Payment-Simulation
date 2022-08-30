@@ -6,15 +6,15 @@ namespace Payment_Simulation.Models
     {
         [Required(ErrorMessage = "Name is Required")]
         [StringLength(20)]
-        public string name { get; private set; }
+        public string name { get; set; }
         [Required(ErrorMessage = "Address is Required")]
-        public string address { get; private set; }
+        public string address { get; set; }
         [Required(ErrorMessage = "Phone Number is Required")]
         [StringLength(12)]
-        public string phoneNumber { get; private set; }
+        public string phoneNumber { get; set; }
         [Required(ErrorMessage = "ID Number is Required")]
         [StringLength(8)]
-        public string idNumber { get; private set; }
+        public string idNumber { get; set; }
 
         public Remitter() { }
 

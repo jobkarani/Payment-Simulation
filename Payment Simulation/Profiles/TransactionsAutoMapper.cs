@@ -8,9 +8,9 @@ namespace Payment_Simulation.Profiles
     {
         public TransactionsAutoMapper()
         {
-            CreateMap<Transactions, PaymentOrderDTO>().ReverseMap();
-            CreateMap<Recipient, PaymentOrderDTO>().ReverseMap();
-            CreateMap<Remitter, PaymentOrderDTO>().ReverseMap(); 
+            CreateMap<Transactions, TransactionsDTO>().ReverseMap();
+            CreateMap<Recipient, TransactionsDTO>().ReverseMap();
+            CreateMap<Remitter, TransactionsDTO>().ReverseMap(); 
         }
     }
 }

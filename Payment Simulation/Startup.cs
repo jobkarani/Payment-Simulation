@@ -46,6 +46,8 @@ namespace Payment_Simulation
 
             app.UseAuthorization();
 
+            app.UseEndpoints(endpoints=> endpoints.MapControllers());
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
