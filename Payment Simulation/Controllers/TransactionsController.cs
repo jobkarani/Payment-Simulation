@@ -104,7 +104,7 @@ namespace Payment_Simulation.Controllers
             domainRemitter.phoneNumber = transaction.phoneNumber;
 
             Recipient domainRecipient = new Recipient();
-            domainRecipient.address = transaction.address;
+            domainRecipient.address= transaction.address;
             domainRecipient.phoneNumber = transaction.phoneNumber;
             domainRecipient.idNumber = transaction.idNumber;
             domainRecipient.primaryAccountNumber = transaction.primaryAccountNumber;
@@ -140,39 +140,7 @@ namespace Payment_Simulation.Controllers
         /// API
         /// </summary>
 
-        public class PaymentOrderRequest{
-            public static originatorConversationId {get; set;};
-            public static paymentNotes{get; set;};
-            public List<Recipient> paymentOrderLines{get; set;};
-        }
-
-        public class Recipient{
-            public RecipientItem recipient{get; set;};
-            public TransactionItem transaction{get; set;}
-        }
-
-        public class RecipientItem{
-            public string name { get; set; }
-            public string address { get; set; }
-            public string emailAddress { get; set; }
-            public string phoneNumber { get; set; }
-            public string idType { get; set; }
-            public string idNumber { get; set; }
-            public string financialInstitution { get; set; }
-            public string primaryAccountNumber { get; set; }
-            public string mccmnc { get; set; }
-            public int ccy { get; set; }
-            public string country { get; set; }
-            public string purpose { get; set; }
-        }
-
-        public class TransactionItem{
-            public string routeId { get; set; }
-            public int ChannelType { get; set; }
-            public int amount { get; set; }
-            public string reference { get; set; }
-            public string systemTraceAuditNumber { get; set; }
-        }
+       
 
         [NonAction]
         public string GetToken()
@@ -226,7 +194,40 @@ namespace Payment_Simulation.Controllers
             }
             return Json(selectItems);
         }
-
+    
     }
 
+     public class PaymentOrderRequest{
+            public string originatorConversationId {get; set;}
+            public string paymentNotes{get; set;}
+            public List<Recipient> paymentOrderLines{get; set;}
+        }
+
+        public class RecipientDetails{
+            public RecipientItem recipient{get; set;}
+            public TransactionItem transaction{get; set;}
+        }
+
+        public class RecipientItem{
+            public string name { get; set; }
+            public string address { get; set; }
+            public string emailAddress { get; set; }
+            public string phoneNumber { get; set; }
+            public string idType { get; set; }
+            public string idNumber { get; set; }
+            public string financialInstitution { get; set; }
+            public string primaryAccountNumber { get; set; }
+            public string mccmnc { get; set; }
+            public int ccy { get; set; }
+            public string country { get; set; }
+            public string purpose { get; set; }
+        }
+
+        public class TransactionItem{
+            public string routeId { get; set; }
+            public int ChannelType { get; set; }
+            public int amount { get; set; }
+            public string reference { get; set; }
+            public string systemTraceAuditNumber { get; set; }
+        }
 }
