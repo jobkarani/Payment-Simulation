@@ -5,24 +5,25 @@ namespace Payment_Simulation.Models
     public class Recipient: ValueObject
     {
         [Required(ErrorMessage = "Name is Required")]
-        [StringLength(20)]
+        [MaxLength(128)]
         public string name { get; set; }
         [Required(ErrorMessage = "Address is Required")]
+        [MaxLength(128)]
         public string address { get; set; }
         [Required(ErrorMessage = "Email is Required")]
-        [StringLength(40)]
+        [MaxLength(64)]
         public string emailAddress { get; set; }
         [Required(ErrorMessage = "Phone Number is Required")]
-        [StringLength(12)]
+        [MaxLength(64)]
         public string phoneNumber { get; set; }
         [Required(ErrorMessage = "ID Number is Required")]
-        [StringLength(8)]
+        [MaxLength(28)]
         public string idNumber { get; set; }
         [Required(ErrorMessage = "Bank is Required")]
-        [StringLength(20)]
+        [MaxLength(64)]
         public string financialInstitution { get; set; }
         [Required(ErrorMessage = "Account Number is Required")]
-        [StringLength(13)]
+        [MaxLength(28)]
         public string primaryAccountNumber { get; set; }
 
         public Recipient() { }

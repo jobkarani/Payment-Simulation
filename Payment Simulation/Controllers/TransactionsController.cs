@@ -140,6 +140,39 @@ namespace Payment_Simulation.Controllers
         /// API
         /// </summary>
 
+        public class PaymentOrderRequest{
+            public static originatorConversationId {get; set;};
+            public static paymentNotes{get; set;};
+            public List<Recipient> paymentOrderLines{get; set;};
+        }
+
+        public class Recipient{
+            public RecipientItem recipient{get; set;};
+            public TransactionItem transaction{get; set;}
+        }
+
+        public class RecipientItem{
+            public string name { get; set; }
+            public string address { get; set; }
+            public string emailAddress { get; set; }
+            public string phoneNumber { get; set; }
+            public string idType { get; set; }
+            public string idNumber { get; set; }
+            public string financialInstitution { get; set; }
+            public string primaryAccountNumber { get; set; }
+            public string mccmnc { get; set; }
+            public int ccy { get; set; }
+            public string country { get; set; }
+            public string purpose { get; set; }
+        }
+
+        public class TransactionItem{
+            public string routeId { get; set; }
+            public int ChannelType { get; set; }
+            public int amount { get; set; }
+            public string reference { get; set; }
+            public string systemTraceAuditNumber { get; set; }
+        }
 
         [NonAction]
         public string GetToken()
@@ -163,8 +196,8 @@ namespace Payment_Simulation.Controllers
         }
 
 
-        [NonAction]
-        public List<ChannelTypeDTO> GetRoutes(string auth)
+        [HttpGet]
+        public async Task<JsonResult> GetRoutes(string auth)
         {
             var client = new RestClient("https://sandboxapi.zamupay.com/v1/");
             var request = new RestRequest("transaction-routes/assigned-routes", Method.Get);
@@ -179,21 +212,21 @@ namespace Payment_Simulation.Controllers
             foreach (var route in items.routes)
             {
 
-                foreach (var x in route.channelTypes)
+                foreach (var type in route.channelTypes)
                 {
                     ChannelTypeDTO selectItem = new ChannelTypeDTO()
                     {
-                        Text = x.channelDescription,
-                        channelType = x.channelType.ToString(),
+                        Text = type.channelDescription,
+                        channelType = type.channelType.ToString(),
                         Value = route.id.ToString()
                     };
 
                     selectItems.Add(selectItem);
                 }
             }
-            return selectItems;
+            return Json(selectItems);
         }
 
-        
     }
+
 }

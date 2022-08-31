@@ -6,12 +6,6 @@ namespace Payment_Simulation
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-        public IConfiguration Configuration { get; }
-
         public static WebApplication InitializeApp(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -45,8 +39,6 @@ namespace Payment_Simulation
             app.UseRouting();
 
             app.UseAuthorization();
-
-            app.UseEndpoints(endpoints=> endpoints.MapControllers());
 
             app.MapControllerRoute(
                 name: "default",
