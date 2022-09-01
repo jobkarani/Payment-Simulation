@@ -5,6 +5,7 @@ namespace Payment_Simulation.Models
     public class Transactions
     {
         public int Id { get; set; }
+        
         public int routeId { get; set; }
         [Required]
         [StringLength(16)]

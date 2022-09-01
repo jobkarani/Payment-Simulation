@@ -34,10 +34,9 @@ h1 {
     text-align:center;
 }
 .form {
-    width: 50%;
+    width: 100%;
     border:none;
     /*border: 1px solid #d09e29;*/
-    margin-left: 25%;
     padding-top: 5%;
     padding-bottom: 5%;
     padding-right: 3%;
@@ -87,4 +86,7 @@ h1 {
 }
 .navbar{
     box-shadow:2px 2px 2px 1px grey;
+}
+.select{
+    width:50%;
 }

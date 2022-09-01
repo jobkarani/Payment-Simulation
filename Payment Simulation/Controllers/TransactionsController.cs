@@ -7,19 +7,18 @@ using Payment_Simulation.Services;
 using System.Linq.Dynamic.Core;
 using RestSharp;
 using Newtonsoft.Json;
-using AutoMapper;
 
 namespace Payment_Simulation.Controllers
 {
     public class TransactionsController : Controller
     {
         private readonly TransactionsSimulation _context;
-        private readonly IMapper _mapper;
+        public Task<string> token;
 
-        public TransactionsController(TransactionsSimulation context, IMapper mapper)
+        public TransactionsController(TransactionsSimulation context)
         {
             _context = context;
-            _mapper = mapper;
+            token = GetToken();
         }
 
         // GET: Transactions/Table
@@ -75,20 +74,12 @@ namespace Payment_Simulation.Controllers
         }
 
 
-        /*//Gets all Transactions
-        [HttpGet]
-        [ProducesResponseType(typeof(PaymentOrderDTO), 200)]
-        public IActionResult GetAllTransactions()
-        {
-            var transactions = _context.Transactions.ToList();
-            var transactionDtos = _mapper.Map<List<PaymentOrderDTO>>(transactions);
-
-            return Ok(transactionDtos);
-        }*/
+        
 
         // GET: Transactions/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            // await GetRoutes();
             return View();
         }
 
@@ -122,7 +113,7 @@ namespace Payment_Simulation.Controllers
             domainTransaction.Remitter = domainRemitter;
             domainTransaction.Recipient = domainRecipient;
 
-            var token = GetToken();
+            // var token = GetToken();
 
             if (ModelState.IsValid)
             {
@@ -143,34 +134,39 @@ namespace Payment_Simulation.Controllers
        
 
         [NonAction]
-        public string GetToken()
+        public async Task<string> GetToken()
         {
             var client = new RestClient("http://54.224.92.175:10001/");
 
             var request = new RestRequest("connect/token", Method.Post);
-            request.AddParameter("client_id", "Flavian");
-            request.AddParameter("client_secret", "a3cfa964-30ad-469a-b1e2-bdf220f69acc");
-            request.AddParameter("grant_type", "client_credentials");
-            request.AddParameter("scope", "PyPay_api");
+
+            string client_id = "Flavian"  ;
+            string client_secret = "a3cfa964-30ad-469a-b1e2-bdf220f69acc"     ;
+
+            request.AddHeader("content-type", "application/x-www-form-urlencoded");
+            request.AddParameter("application/x-www-form-urlencoded", $"grant_type=client_credentials&client_id={client_id}&client_secret={client_secret}", ParameterType.RequestBody);
             RestResponse response = client.Execute(request);
 
-            if (!response.IsSuccessful)
+            if (response.IsSuccessful)
             {
-                
+                var auth = JsonConvert.DeserializeObject<RequestTokenDTO>(response.Content);
+                return auth.access_token;
             }
-            var auth = JsonConvert.DeserializeObject<RequestTokenDTO>(response.Content!);
-
-            return auth!.access_token;
+            else{
+                Console.WriteLine("Authorization token request failed with the following error: @{Error}", response.Content);
+                throw new Exception(response.Content);
+            }
+            
         }
 
 
         [HttpGet]
-        public async Task<JsonResult> GetRoutes(string auth)
+        public async Task<JsonResult> GetRoutes()
         {
             var client = new RestClient("https://sandboxapi.zamupay.com/v1/");
             var request = new RestRequest("transaction-routes/assigned-routes", Method.Get);
-            request.AddHeader("Authorization", "Bearer" + auth);
-            RestResponse response = client.Execute(request);
+            request.AddHeader("Authorization", "Bearer " + token.Result);
+            RestResponse response =  client.Execute(request);
 
             List<ChannelTypeDTO> selectItems = new List<ChannelTypeDTO>();
 
