@@ -12,11 +12,11 @@
                 columns: [
                     { data: "Id", name: "Id" },
                     { data: "Remitter.name", name: "Remitter.name" },
-                    { data: "transactionStatusDescription", name: "transactionStatusDescription" },
+                    { data: "Remitter.primaryAccountNumber", name: "Remitter.primaryAccountNumber" },
+                    { data: "Recipient.name", name: "Recipient.name" },
+                    { data: "Recipient.primaryAccountNumber", name: "Recipient.primaryAccountNumber" },
+                    { data: "channelType", name: "channelType" },
                     { data: "amount", name: "amount" },
-                    { data: "feeAmount", name: "feeAmount" },
-                    { data: "resultCodeDescription", name: "resultCodeDescription" },
-                    { data: "customerAccountNo", name: "customerAccountNo" },
                     { data: "reference", name: "reference" },
                 ]
             }

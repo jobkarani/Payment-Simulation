@@ -46,9 +46,13 @@ namespace Payment_Simulation.Controllers
             if (!string.IsNullOrEmpty(searchValue))
             {
                 data = data.Where(x => x.Id.ToString().Contains(searchValue.ToLower())
+                || x.Id.ToString().Contains(searchValue.ToLower())
                 || x.Remitter.name.ToString().Contains(searchValue.ToLower())
+                || x.Remitter.primaryAccountNumber.ToString().Contains(searchValue.ToLower())
+                || x.Recipient.name.ToString().Contains(searchValue.ToLower())
+                || x.Recipient.primaryAccountNumber.ToString().Contains(searchValue.ToLower())
+                || x.channelType.ToString().Contains(searchValue.ToLower())
                 || x.amount.ToString().Contains(searchValue.ToLower())
-                || x.customerAccountNo.ToString().Contains(searchValue.ToLower())
                 || x.reference.ToLower().Contains(searchValue.ToLower())
                 );
             }
@@ -86,39 +90,80 @@ namespace Payment_Simulation.Controllers
         // POST: Transactions/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateTransaction([FromBody] TransactionsDTO transaction)
+        public async Task<IActionResult> CreateTransaction(Transactions transaction)
         {
             Remitter domainRemitter = new Remitter();
-            domainRemitter.address = transaction.address;
-            domainRemitter.name = transaction.name;
-            domainRemitter.idNumber = transaction.phoneNumber;
-            domainRemitter.phoneNumber = transaction.phoneNumber;
+            domainRemitter.address = transaction.Remitter.address;
+            domainRemitter.name = transaction.Remitter.name;
+            domainRemitter.phoneNumber = transaction.Remitter.phoneNumber;
+            domainRemitter.idNumber = transaction.Remitter.idNumber;
+            domainRemitter.financialInstitution = transaction.Remitter.financialInstitution;
+            domainRemitter.primaryAccountNumber = transaction.Remitter.primaryAccountNumber;
 
             Recipient domainRecipient = new Recipient();
-            domainRecipient.address= transaction.address;
-            domainRecipient.phoneNumber = transaction.phoneNumber;
-            domainRecipient.idNumber = transaction.idNumber;
-            domainRecipient.primaryAccountNumber = transaction.primaryAccountNumber;
-            domainRecipient.emailAddress = transaction.emailAddress;
-            domainRecipient.financialInstitution = transaction.financialInstitution;
+            domainRecipient.name= transaction.Recipient.name;
+            domainRecipient.address= transaction.Recipient.address;
+            domainRecipient.phoneNumber = transaction.Recipient.phoneNumber;
+            domainRecipient.idNumber = transaction.Recipient.idNumber;
+            domainRecipient.primaryAccountNumber = transaction.Recipient.primaryAccountNumber;
+            domainRecipient.emailAddress = transaction.Recipient.emailAddress;
+            domainRecipient.financialInstitution = transaction.Recipient.financialInstitution;
 
 
             Transactions domainTransaction = new Transactions();
+            domainTransaction.routeId = transaction.routeId;
             domainTransaction.originatorConversationId   = transaction.originatorConversationId;
-            domainTransaction.amount = domainTransaction.amount;
-            domainTransaction.reference = domainTransaction.reference;
-            domainTransaction.channelType = domainTransaction.channelType;
-            domainTransaction.customerAccountNo = domainTransaction.customerAccountNo;
-            domainTransaction.Id = domainTransaction.Id;
+            domainTransaction.amount = transaction.amount;
+            domainTransaction.reference = transaction.reference;
+            domainTransaction.channelType = transaction.channelType;
+            domainTransaction.Id = transaction.Id;
             domainTransaction.Remitter = domainRemitter;
             domainTransaction.Recipient = domainRecipient;
+
+           
+
+            var client = new RestClient("https://sandbox.api.zamupay.com/v1/");
+            var request = new RestRequest("payment-order/new-order",Method.Post);
+            request.AddHeader("Content-Type", "application/json");
+            var body = JsonConvert.SerializeObject(transaction);
+            request.AddParameter("application/json", body,  ParameterType.RequestBody);
+            request.AddHeader("Authorization", "Bearer " + token.Result);
+            RestResponse response = client.Execute(request);
 
             // var token = GetToken();
 
             if (ModelState.IsValid)
             {
                 _context.Add(transaction);
-                await _context.SaveChangesAsync();
+
+                if(await _context.SaveChangesAsync() > 0){
+
+                    RecipientItem domainRecipientItem = new RecipientItem();
+                    domainRecipientItem.name = transaction.Recipient.name;
+                    domainRecipientItem.address = transaction.Recipient.address;
+                    domainRecipientItem.phoneNumber = transaction.Recipient.phoneNumber;
+                    domainRecipientItem.idNumber = transaction.Recipient.idNumber;
+                    domainRecipientItem.financialInstitution = transaction.Recipient.financialInstitution;
+
+                    TransactionItem domainTransactionItem = new TransactionItem();
+                    domainTransactionItem.routeId = transaction.routeId.ToString();
+                    domainTransactionItem.ChannelType = transaction.channelType;
+                    domainTransactionItem.amount = Convert.ToInt32(transaction.amount);
+                    domainTransactionItem.reference = transaction.reference;
+                    // domainTransactionItem.systemTraceAuditNumber = transaction.systemTraceAuditNumber;
+
+                    RecipientDetails domainRecipientDetails = new RecipientDetails();
+                    domainRecipientDetails.recipient = domainRecipientItem;
+                    domainRecipientDetails.transaction = domainTransactionItem;
+
+                    PaymentOrderRequest domainPaymentOrderRequest = new PaymentOrderRequest();
+                    domainPaymentOrderRequest.originatorConversationId = transaction.originatorConversationId;
+                    domainPaymentOrderRequest.paymentNotes = "Debt payment";
+                    domainPaymentOrderRequest.paymentOrderLines = new List<RecipientDetails>
+                    {
+                        domainRecipientDetails
+                    } ;
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View(transaction);
@@ -196,7 +241,7 @@ namespace Payment_Simulation.Controllers
      public class PaymentOrderRequest{
             public string originatorConversationId {get; set;}
             public string paymentNotes{get; set;}
-            public List<Recipient> paymentOrderLines{get; set;}
+            public List<RecipientDetails> paymentOrderLines{get; set;}
         }
 
         public class RecipientDetails{

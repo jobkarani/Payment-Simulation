@@ -3,6 +3,7 @@
     public class TransactionsDTO
     {
         public int Id { get; set; }
+        public int routeId { get; set; }
         public string? originatorConversationId { get; set; }
         public float amount { get; private set; }
         public string? reference { get; private set; }
@@ -15,5 +16,6 @@
         public string emailAddress { get; private set; }
         public string financialInstitution { get; private set; }
         public string primaryAccountNumber { get; private set; }
+         public string systemTraceAuditNumber { get; set; }
     }
 }
