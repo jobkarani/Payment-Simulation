@@ -23,12 +23,14 @@ namespace Payment_Simulation.Models
 
         public Remitter() { }
 
-        public Remitter(string name, string address, string phoneNumber, string idNumber)
+        public Remitter(string name, string address, string phoneNumber, string idNumber, string financialInstitution, string primaryAccountNumber)
         {
             this.name = name;
             this.address = address;
             this.phoneNumber = phoneNumber;
             this.idNumber = idNumber;
+            this.financialInstitution = financialInstitution;
+            this.primaryAccountNumber = primaryAccountNumber;
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
@@ -36,6 +38,9 @@ namespace Payment_Simulation.Models
             yield return name;
             yield return address;
             yield return phoneNumber;
+            yield return financialInstitution;
+            yield return primaryAccountNumber;
+
         }
     }
 }
