@@ -109,7 +109,7 @@ namespace Payment_Simulation.Controllers
 
             TransactionsDTO domainTransaction = new TransactionsDTO();
             domainTransaction.routeId = transaction.routeId;
-            transaction.originatorConversationId = Guid.NewGuid().ToString();
+            // transaction.originatorConversationId = Guid.NewGuid().ToString();
             domainTransaction.amount = transaction.amount;
             domainTransaction.reference = transaction.reference;
             domainTransaction.channelType = transaction.channelType;
@@ -122,13 +122,7 @@ namespace Payment_Simulation.Controllers
 
                 if(await _context.SaveChangesAsync() > 0){
 
-                    var client = new RestClient("https://sandbox.api.zamupay.com/v1/");
-                    var request = new RestRequest("payment-order/new-order",Method.Post);
-                    request.AddHeader("Content-Type", "application/json");
-                    var body = JsonConvert.SerializeObject(transaction);
-                    request.AddParameter("application/json", body,  ParameterType.RequestBody);
-                    request.AddHeader("Authorization", "Bearer " + token.Result);
-                    RestResponse response = client.Execute(request);
+                    
 
                     RecipientItem domainRecipientItem = new RecipientItem();
                     domainRecipientItem.name = transaction.Recipient.name;
@@ -157,6 +151,14 @@ namespace Payment_Simulation.Controllers
                     } ;
                 }
                 return RedirectToAction(nameof(Index));
+
+                var client = new RestClient("https://sandbox.api.zamupay.com/v1/");
+                var request = new RestRequest("payment-order/new-order",Method.Post);
+                request.AddHeader("Content-Type", "application/json");
+                var body = JsonConvert.SerializeObject(transaction);
+                request.AddParameter("application/json", body,  ParameterType.RequestBody);
+                request.AddHeader("Authorization", "Bearer " + token.Result);
+                RestResponse response = client.Execute(request);
             }
             return View(transaction);
         }
