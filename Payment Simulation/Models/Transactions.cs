@@ -21,8 +21,6 @@ namespace Payment_Simulation.Models
         public string reference { get; set; }
         
         public int channelType { get; set; }
-        [Required(ErrorMessage = "Account Number is Required")]
-        [MaxLength(28)]
 
         public virtual Remitter Remitter { get; set; }
 

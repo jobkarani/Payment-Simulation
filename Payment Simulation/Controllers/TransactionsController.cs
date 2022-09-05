@@ -77,9 +77,6 @@ namespace Payment_Simulation.Controllers
             return Ok(returnObj);
         }
 
-
-        
-
         // GET: Transactions/Create
         public async Task<IActionResult> Create()
         {
@@ -90,7 +87,7 @@ namespace Payment_Simulation.Controllers
         // POST: Transactions/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateTransaction(Transactions transaction)
+        public async Task<IActionResult> Create(Transactions transaction)
         {
             Remitter domainRemitter = new Remitter();
             domainRemitter.address = transaction.Remitter.address;
@@ -169,14 +166,9 @@ namespace Payment_Simulation.Controllers
             return View(transaction);
         }
 
-
-
-
         /// <summary>
         /// API
         /// </summary>
-
-       
 
         [NonAction]
         public async Task<string> GetToken()
@@ -235,7 +227,6 @@ namespace Payment_Simulation.Controllers
             }
             return Json(selectItems);
         }
-    
     }
 
      public class PaymentOrderRequest{
