@@ -1,21 +1,24 @@
-﻿namespace Payment_Simulation.Services
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Payment_Simulation.Services
 {
     public class TransactionsDTO
     {
+        [Key]
         public int Id { get; set; }
-        public int routeId { get; set; }
+        public string routeId { get; set; }
         public string? originatorConversationId { get; set; }
-        public float amount { get; private set; }
-        public string? reference { get; private set; }
-        public int channelType { get; private set; }
-        public string? customerAccountNo { get; private set; }
-        public string name { get; private set; }
-        public string address { get; private set; }
-        public string phoneNumber { get; private set; }
-        public string idNumber { get; private set; }
-        public string emailAddress { get; private set; }
-        public string financialInstitution { get; private set; }
-        public string primaryAccountNumber { get; private set; }
+        public float amount { get;  set; }
+        public string? reference { get;  set; }
+        public int channelType { get;  set; }
+        public string? customerAccountNo { get;  set; }
+        public string name { get;  set; }
+        public string address { get;  set; }
+        public string phoneNumber { get;  set; }
+        public string idNumber { get;  set; }
+        public string emailAddress { get;  set; }
+        public string financialInstitution { get;  set; }
+        public string primaryAccountNumber { get;  set; }
          public string systemTraceAuditNumber { get; set; }
     }
 }

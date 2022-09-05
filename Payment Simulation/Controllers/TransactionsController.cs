@@ -107,15 +107,13 @@ namespace Payment_Simulation.Controllers
             domainRecipient.financialInstitution = transaction.Recipient.financialInstitution;
 
 
-            Transactions domainTransaction = new Transactions();
+            TransactionsDTO domainTransaction = new TransactionsDTO();
             domainTransaction.routeId = transaction.routeId;
-            domainTransaction.originatorConversationId   = transaction.originatorConversationId;
+            transaction.originatorConversationId = Guid.NewGuid().ToString();
             domainTransaction.amount = transaction.amount;
             domainTransaction.reference = transaction.reference;
             domainTransaction.channelType = transaction.channelType;
-            domainTransaction.Id = transaction.Id;
-            domainTransaction.Remitter = domainRemitter;
-            domainTransaction.Recipient = domainRecipient;
+           
 
            
 

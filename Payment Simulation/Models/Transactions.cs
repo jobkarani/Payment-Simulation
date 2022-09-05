@@ -4,8 +4,10 @@ namespace Payment_Simulation.Models
 {
     public class Transactions
     {
+        [Key]
         public int Id { get; set; }
 
+        [MaxLength(64)]
         public string routeId { get; set; }
 
         [MaxLength(64)]

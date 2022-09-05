@@ -16,6 +16,7 @@ namespace Payment_Simulation.Models
         [Required(ErrorMessage = "ID Number is Required")]
         [MaxLength(28)]
         public string idNumber { get; set; }
+        [MaxLength(64)]
         public string financialInstitution { get; set; }
         [Required(ErrorMessage = "Account Number is Required")]
         [MaxLength(28)]
