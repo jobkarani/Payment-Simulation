@@ -114,17 +114,6 @@ namespace Payment_Simulation.Controllers
             domainTransaction.reference = transaction.reference;
             domainTransaction.channelType = transaction.channelType;
            
-
-           
-
-            var client = new RestClient("https://sandbox.api.zamupay.com/v1/");
-            var request = new RestRequest("payment-order/new-order",Method.Post);
-            request.AddHeader("Content-Type", "application/json");
-            var body = JsonConvert.SerializeObject(transaction);
-            request.AddParameter("application/json", body,  ParameterType.RequestBody);
-            request.AddHeader("Authorization", "Bearer " + token.Result);
-            RestResponse response = client.Execute(request);
-
             // var token = GetToken();
 
             if (ModelState.IsValid)
@@ -132,6 +121,14 @@ namespace Payment_Simulation.Controllers
                 _context.Add(transaction);
 
                 if(await _context.SaveChangesAsync() > 0){
+
+                    var client = new RestClient("https://sandbox.api.zamupay.com/v1/");
+                    var request = new RestRequest("payment-order/new-order",Method.Post);
+                    request.AddHeader("Content-Type", "application/json");
+                    var body = JsonConvert.SerializeObject(transaction);
+                    request.AddParameter("application/json", body,  ParameterType.RequestBody);
+                    request.AddHeader("Authorization", "Bearer " + token.Result);
+                    RestResponse response = client.Execute(request);
 
                     RecipientItem domainRecipientItem = new RecipientItem();
                     domainRecipientItem.name = transaction.Recipient.name;

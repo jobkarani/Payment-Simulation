@@ -9,7 +9,7 @@
 <hr />
 <div class="row">
     <div class="col-md-12 form">
-        <form asp-action="Create"  >
+        <form asp-action="Create" method="post" >
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="row">
                 <div class="row  col-md-6">
@@ -52,6 +52,9 @@
                     </div>
                     <div class="form-group">
                     <input asp-for="Recipient.phoneNumber" placeholder="Phone Number" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                    <input asp-for="Recipient.emailAddress" placeholder="Email" class="form-control" />
                     </div>
                 </div>
             </div>
