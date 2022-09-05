@@ -19,6 +19,8 @@ namespace Payment_Simulation.Models
                                 navigationBuilder.Property(address => address.address);
                                 navigationBuilder.Property(address => address.phoneNumber);
                                 navigationBuilder.Property(address => address.idNumber);
+                                navigationBuilder.Property(address => address.financialInstitution);
+                                navigationBuilder.Property(address => address.primaryAccountNumber);
                             });
 
             builder.OwnsOne(user => user.Recipient,

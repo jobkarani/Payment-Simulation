@@ -18,6 +18,5 @@ namespace Payment_Simulation.Data
         {
             modelBuilder.ApplyConfiguration(new TransactionsConfig());
         }
-        public DbSet<Payment_Simulation.Models.Recipient>? Recipient { get; set; }
     }
 }
