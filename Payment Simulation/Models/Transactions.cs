@@ -14,7 +14,7 @@ namespace Payment_Simulation.Models
         public  string? systemConversationId { get; set; }
         [Required]
         [MaxLength(64)]
-        public string? originatorConversationId { get; set; }
+        public string originatorConversationId { get; set; }
 
         [Required(ErrorMessage = "Amount is Required")]
         public float amount { get; set; }

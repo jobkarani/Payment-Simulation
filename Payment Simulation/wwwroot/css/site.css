@@ -84,6 +84,10 @@ h1 {
     padding-left: 3%;
     background-color: #ffff;
 }
+.table{
+    background-color: #eff3f6;
+    padding-right: 5%;
+}
 .navbar{
     box-shadow:2px 2px 2px 1px grey;
 }

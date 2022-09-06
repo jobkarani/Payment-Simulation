@@ -7,6 +7,7 @@ using Payment_Simulation.Services;
 using System.Linq.Dynamic.Core;
 using RestSharp;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace Payment_Simulation.Controllers
 {
@@ -45,9 +46,7 @@ namespace Payment_Simulation.Controllers
             // search data when search value found
             if (!string.IsNullOrEmpty(searchValue))
             {
-                data = data.Where(x => x.Id.ToString().Contains(searchValue.ToLower())
-                || x.Id.ToString().Contains(searchValue.ToLower())
-                || x.Remitter.name.ToString().Contains(searchValue.ToLower())
+                data = data.Where(x => x.Remitter.name.ToString().Contains(searchValue.ToLower())
                 || x.Remitter.primaryAccountNumber.ToString().Contains(searchValue.ToLower())
                 || x.Recipient.name.ToString().Contains(searchValue.ToLower())
                 || x.Recipient.primaryAccountNumber.ToString().Contains(searchValue.ToLower())
@@ -89,6 +88,8 @@ namespace Payment_Simulation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Transactions transaction)
         {
+            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+
             Remitter domainRemitter = new Remitter();
             domainRemitter.address = transaction.Remitter.address;
             domainRemitter.name = transaction.Remitter.name;
@@ -109,7 +110,6 @@ namespace Payment_Simulation.Controllers
 
             TransactionsDTO domainTransaction = new TransactionsDTO();
             domainTransaction.routeId = transaction.routeId;
-            // transaction.originatorConversationId = Guid.NewGuid().ToString();
             domainTransaction.amount = transaction.amount;
             domainTransaction.reference = transaction.reference;
             domainTransaction.channelType = transaction.channelType;
@@ -122,21 +122,24 @@ namespace Payment_Simulation.Controllers
 
                 if(await _context.SaveChangesAsync() > 0){
 
-                    
-
                     RecipientItem domainRecipientItem = new RecipientItem();
                     domainRecipientItem.name = transaction.Recipient.name;
                     domainRecipientItem.address = transaction.Recipient.address;
                     domainRecipientItem.phoneNumber = transaction.Recipient.phoneNumber;
                     domainRecipientItem.idNumber = transaction.Recipient.idNumber;
+                    domainRecipientItem.emailAddress = transaction.Recipient.emailAddress;
                     domainRecipientItem.financialInstitution = transaction.Recipient.financialInstitution;
+                    domainRecipientItem.primaryAccountNumber = transaction.Recipient.primaryAccountNumber;
+                    domainRecipientItem.ccy = 404;
+                    domainRecipientItem.country = "KE";
+                    domainRecipientItem.mccmnc = "63902";
 
                     TransactionItem domainTransactionItem = new TransactionItem();
                     domainTransactionItem.routeId = transaction.routeId.ToString();
                     domainTransactionItem.ChannelType = transaction.channelType;
                     domainTransactionItem.amount = Convert.ToInt32(transaction.amount);
                     domainTransactionItem.reference = transaction.reference;
-                    // domainTransactionItem.systemTraceAuditNumber = transaction.systemTraceAuditNumber;
+                    domainTransactionItem.systemTraceAuditNumber = Guid.NewGuid().ToString();
 
                     RecipientDetails domainRecipientDetails = new RecipientDetails();
                     domainRecipientDetails.recipient = domainRecipientItem;
@@ -149,16 +152,21 @@ namespace Payment_Simulation.Controllers
                     {
                         domainRecipientDetails
                     } ;
+                    
+
+                    var client = new RestClient("https://sandboxapi.zamupay.com/v1/");
+                    var request = new RestRequest("payment-order/new-order", Method.Post);
+                    request.AddHeader("Content-Type", "application/json");
+                    request.AddHeader("authorization", "Bearer " + token.Result);
+                    request.AddParameter("application/json", JsonConvert.SerializeObject(domainPaymentOrderRequest), ParameterType.RequestBody);
+                    
+                    RestResponse response = client.Execute(request);
                 }
+
+                
                 return RedirectToAction(nameof(Index));
 
-                var client = new RestClient("https://sandbox.api.zamupay.com/v1/");
-                var request = new RestRequest("payment-order/new-order",Method.Post);
-                request.AddHeader("Content-Type", "application/json");
-                var body = JsonConvert.SerializeObject(transaction);
-                request.AddParameter("application/json", body,  ParameterType.RequestBody);
-                request.AddHeader("Authorization", "Bearer " + token.Result);
-                RestResponse response = client.Execute(request);
+                
             }
             return View(transaction);
         }
@@ -192,7 +200,6 @@ namespace Payment_Simulation.Controllers
             }
             
         }
-
 
         [HttpGet]
         public async Task<JsonResult> GetRoutes()
