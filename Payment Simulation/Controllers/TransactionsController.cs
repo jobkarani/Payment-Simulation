@@ -39,7 +39,7 @@ namespace Payment_Simulation.Controllers
             var searchValue = Request.Form["search[value]"].FirstOrDefault();
             int pageSize = Convert.ToInt32(Request.Form["length"].FirstOrDefault() ?? "0");
             int skip = Convert.ToInt32(Request.Form["start"].FirstOrDefault() ?? "0");
-            var data = _context.Set<Models.Transactions>().AsQueryable();
+            var data = _context.Set<Transactions>().AsQueryable();
             //get total count of data in table
             totalRecord = data.Count();
             // search data when search value found

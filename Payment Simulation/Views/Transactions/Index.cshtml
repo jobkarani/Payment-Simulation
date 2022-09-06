@@ -15,13 +15,14 @@
 @{
     ViewData["Title"] = "Transactions Page";
 }
- <link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+ <link href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet" />
 
 <div class="container">
     <div class="table-responsive tab">
         <table id="transactionDatatable" class="table table-bordered">
             <thead>
                 <tr>
+                    <th>Id</th>
                     <th>Remitter</th>
                     <th>Remitter's Account No</th>
                     <th>Recipient</th>
@@ -32,11 +33,11 @@
                 </tr>
             </thead>
         </table>
+
     </div>
 </div>
  @section Scripts
  {
      <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
       <script src="~/js/transactionDatatable.js"></script>
-    
  }
