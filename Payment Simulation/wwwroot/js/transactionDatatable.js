@@ -9,6 +9,11 @@
                 processing: true,
                 serverSide: true,
                 filter: true,
+                "fnRowCallback": function(nRow, aData){
+                    $("td:eq(9)",nRow).html('<a href="/Transactions/GetDetails?id='+ aData + '" class = "query"> View <a/>');
+
+                    return nRow;
+                },
                 columns: [
                     { data: "remitter.name", name: "Remitter.name" },
                     { data: "remitter.primaryAccountNumber", name: "Remitter.primaryAccountNumber" },
@@ -19,6 +24,7 @@
                     { data: "channelType", name: "channelType" },
                     { data: "amount", name: "amount" },
                     { data: "reference", name: "reference" },
+                    { data:"channelType", name:"Action"},
                 ]
             }
         );

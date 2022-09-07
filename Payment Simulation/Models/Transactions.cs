@@ -27,5 +27,23 @@ namespace Payment_Simulation.Models
         public virtual Remitter Remitter { get; set; }
 
         public virtual Recipient Recipient { get; set; }
+
+        public Transactions() {}
+
+        public Transactions(int Id, string routeId, string systemConversationId, string originatorConversationId, float amount, string reference, int channelType, Remitter Remitter, Recipient Recipient)
+        {
+            this.Id = Id;
+            this.routeId = routeId;
+            this.systemConversationId = systemConversationId;
+            this.originatorConversationId = originatorConversationId;
+            this.amount = amount;
+            this.reference = reference;
+            this.channelType = channelType;
+            this.Remitter =  Remitter;
+            this.Recipient = Recipient;
+        }
+
     }
+    
+    
 }
