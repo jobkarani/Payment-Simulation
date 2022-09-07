@@ -3,7 +3,7 @@ html {
     font-family: Open Sans;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 765px) {
   html {
     font-size: 16px;
   }
@@ -45,7 +45,7 @@ h1 {
     background-color: #ffff;
 }
 .form-control {
-    box-shadow: .3px 3px 3px 1px #d09e29;
+    box-shadow: .3px 3px 3px 1px #888888;
     /* border: 1px solid #d09e29;*/
     text-align: center;
     height: 3rem;
@@ -109,7 +109,38 @@ h1 {
     border-radius: 15%;
 }
 .job:hover{
-    background-color: #2c0d63;
-    color: #fff;
+    background-color: #dfe4ed;
+    color: #2c0d63;
     border: 1px solid #fff;
+}
+
+.recipient{
+    background-color: #fff;
+    border: 1px solid #dfe4ed;
+    box-shadow:5px 5px 5px 3px #dfe4ed;
+    padding: 3%;
+}
+.recipient:hover{
+    border: 1px solid #888888;
+    box-shadow:5px 5px 5px 3px #888888;
+}
+.remitter{
+    background-color: #fff;
+    border: 1px solid #dfe4ed;
+    box-shadow:5px 5px 5px 3px #dfe4ed;
+    padding: 3%;
+}
+.remitter:hover{
+    border: 1px solid #888888;
+    box-shadow:5px 5px 5px 3px #888888;
+}
+.transactions{
+    background-color: #fff;
+    border: 1px solid #dfe4ed;
+    box-shadow:5px 5px 5px 3px #dfe4ed;
+    padding: 3%;
+}
+.transactions:hover{
+    border: 1px solid #888888;
+    box-shadow:5px 5px 5px 3px #888888;
 }

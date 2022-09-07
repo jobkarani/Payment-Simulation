@@ -4,22 +4,196 @@
     ViewBag.Title = "Details";
 }
 
-<h1 class="mt-3">Transaction Details</h1>
+<h1 class="mt-3">Transfer Details</h1>
 
 
 
 <div>
     <hr />
     <dl class="dl-horizontal">
+    <div class="row">
+    <div class="recipient col-md-6">
+        <h4 class="text-center">Recipient Details</h4>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+            <dt>
+            <label asp-for="Recipient.name">Name</label>
+            </dt>
+
+            <dd class="text-dark">
+                @Html.DisplayFor(model => model.Recipient.name)
+            </dd>
+            </div>
+
+            <div class="col-md-6">
+            <dt>
+            <label asp-for="Recipient.emailAddress">Email</label>
+            </dt>
+
+            <dd class="text-dark">
+                @Html.DisplayFor(model => model.Recipient.emailAddress)
+            </dd>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+            <dt>
+            <label asp-for="Recipient.phoneNumber">Phone</label>
+            </dt>
+
+            <dd class="text-dark">
+                @Html.DisplayFor(model => model.Recipient.phoneNumber)
+            </dd>
+            </div>
+
+            <div class="col-md-6">
+            <dt>
+            <label asp-for="Recipient.idNumber">ID Number</label>
+            </dt>
+
+            <dd class="text-dark">
+                @Html.DisplayFor(model => model.Recipient.idNumber)
+            </dd>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+            <dt>
+            <label asp-for="Recipient.financialInstitution">Bank</label>
+            </dt>
+
+            <dd class="text-dark">
+                @Html.DisplayFor(model => model.Recipient.financialInstitution)
+            </dd>
+            </div>
+
+            <div class="col-md-6">
+            <dt>
+            <label asp-for="Recipient.primaryAccountNumber">Account</label>
+            </dt>
+
+            <dd class="text-dark">
+                @Html.DisplayFor(model => model.Recipient.primaryAccountNumber)
+            </dd>
+            </div>
+        </div>
+    </div>
+
+    <div class="remitter col-md-6 ml-2">
+        <h4 class="text-center">Remitter Details</h4>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+            <dt>
+            <label asp-for="Remitter.name">Name</label>
+            </dt>
+
+            <dd class="text-dark">
+                @Html.DisplayFor(model => model.Remitter.name)
+            </dd>
+            </div>
+
+            <div class="col-md-6">
+            <dt>
+            <label asp-for="Remitter.phoneNumber">Phone</label>
+            </dt>
+
+            <dd class="text-dark">
+                @Html.DisplayFor(model => model.Remitter.phoneNumber)
+            </dd>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+            <dt>
+            <label asp-for="Remitter.idNumber">ID Number</label>
+            </dt>
+
+            <dd class="text-dark">
+                @Html.DisplayFor(model => model.Remitter.idNumber)
+            </dd>
+            </div>
+
+            <div class="col-md-6">
+            <dt>
+            <label asp-for="Remitter.financialInstitution">Bank</label>
+            </dt>
+
+            <dd class="text-dark">
+                @Html.DisplayFor(model => model.Remitter.financialInstitution)
+            </dd>
+            </div>
+        </div>
         <dt>
-           <label asp-for="Recipient.name">Name</label>
+           <label asp-for="Remitter.primaryAccountNumber">Account</label>
         </dt>
 
         <dd class="text-dark">
-            @Html.DisplayFor(model => model.Recipient.name)
+            @Html.DisplayFor(model => model.Remitter.primaryAccountNumber)
         </dd>
+    </div>
+    </div>
 
+    <hr>
+
+    <div class="transactions mt-3">
+        <h4 class="text-center">Transaction Details</h4>
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6">
+            <dt>
+            <label asp-for="routeId">Route</label>
+            </dt>
+
+            <dd class="text-dark">
+                @Html.DisplayFor(model => model.routeId)
+            </dd>
+            </div>
+
+            <div class="col-md-6">
+            <dt>
+            <label asp-for="Id">ID</label>
+            </dt>
+
+            <dd class="text-dark">
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+            <dt>
+            <label asp-for="originatorConversationId">ConversationId</label>
+            </dt>
+
+            <dd class="text-dark">
+                @Html.DisplayFor(model => model.originatorConversationId)
+            </dd>
+            </div>
+
+            <div class="col-md-6">
+            <dt>
+            <label asp-for="amount">Amount</label>
+            </dt>
+
+            <dd class="text-dark">
+                @Html.DisplayFor(model => model.amount)
+            </dd>
+            </div>
+        </div>
+        <dt>
+           <label asp-for="reference">Reference</label>
+        </dt>
+
+        <dd class="text-dark">
+            @Html.DisplayFor(model => model.reference)
+        </dd>
+    </div>
     </dl>
 </div>
-<p>
-</p>

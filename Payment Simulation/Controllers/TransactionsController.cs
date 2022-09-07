@@ -239,8 +239,11 @@ namespace Payment_Simulation.Controllers
         // Console.WriteLine(response.Content);
 
         Transactions transactions = await _context.Transactions.FindAsync(id);
+        Console.WriteLine(id);
 
         return View(transactions);
+        
+        
     }
 
     }

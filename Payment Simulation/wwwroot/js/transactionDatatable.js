@@ -20,9 +20,10 @@
                     { data: "amount", name: "amount" },
                     { data: "reference", name: "reference" },
                     { data:"channelType", name:"Action"},
+
                 ],
                 "fnRowCallback": function(nRow, aData){
-                    $("td:eq(9)",nRow).html('<a class="job" href="/Transactions/GetDetails?id='+ aData + '" class = "query"> View <a/>');
+                    $("td:eq(9)",nRow).html('<a class="job" href="/Transactions/GetDetails?id='+ aData.id + '"> View <a/>');
 
                     return nRow;
                 },
