@@ -6,6 +6,7 @@
 }
 
 <h1 class="mt-3">Transactions</h1>
+<hr>
 
 <p>
     <a class="btn btn-two" asp-action="Create"><i class="fa-solid fa-plus"></i> New Transfer</a>
@@ -17,7 +18,7 @@
 }
  <link href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet" />
 
-<div class="container">
+<div class="container-full">
     <div class="table-responsive tab">
         <table id="transactionDatatable" class="table table-bordered table-striped">
             <thead>
@@ -31,10 +32,10 @@
                     <th>channelType</th>
                     <th>Amount</th>
                     <th>Transaction Reference</th>
+                    <th>Action</th>
                 </tr>
             </thead>
         </table>
-
     </div>
 </div>
  @section Scripts

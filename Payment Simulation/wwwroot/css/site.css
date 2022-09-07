@@ -75,22 +75,41 @@ h1 {
     margin-left: 0;
     margin-right: 0;
     width: 100%;
-    border: none;
-    box-shadow: 5px 5px 5px 1px grey;
-    /*border: 1px solid #d09e29;*/
+    border: 1px solid #f6f9fc;
     padding-top: 5%;
     padding-bottom: 5%;
     padding-right: 3%;
     padding-left: 3%;
     background-color: #ffff;
 }
+.tab:hover{
+    box-shadow: 5px 5px 5px 1px grey;
+    border: none;
+}
 .table{
     background-color: #eff3f6;
-    padding-right: 5%;
+    padding-right: 1%;
 }
 .navbar{
     box-shadow:2px 2px 2px 1px grey;
 }
 .select{
     width:50%;
+}
+.job{
+    text-decoration: none;
+    color: #d09e29;
+    border: 1px solid #d09e29;
+    width: 20px;
+    background: #fff;
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    border-radius: 15%;
+}
+.job:hover{
+    background-color: #2c0d63;
+    color: #fff;
+    border: 1px solid #fff;
 }

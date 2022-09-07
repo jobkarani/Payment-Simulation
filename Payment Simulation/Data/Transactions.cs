@@ -9,7 +9,7 @@ namespace Payment_Simulation.Data
     {
         public TransactionsSimulation(DbContextOptions options) : base(options) { }
      
-        DbSet<Models.Transactions> Transactions
+        public DbSet<Transactions> Transactions
         {
             get;
             set;

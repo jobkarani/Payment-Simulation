@@ -231,14 +231,14 @@ namespace Payment_Simulation.Controllers
             }
             return Json(selectItems);
         }
-        public async Task<IActionResult> GetDetails(string id){
+        public async Task<IActionResult> GetDetails(int id){
 
         // var client = new RestClient("https://sandbox.api.zamupay.com/v1/");
         // var request = new RestRequest("payment-order/check-status?Id=OriginatorConversationIdString&IdType=OriginatorConversationId",Method.Get);
         // RestResponse response = client.Execute(request);
         // Console.WriteLine(response.Content);
 
-        Transactions transactions = await _context.FindAsync<Transactions>(Int32.Parse(id));
+        Transactions transactions = await _context.Transactions.FindAsync(id);
 
         return View(transactions);
     }

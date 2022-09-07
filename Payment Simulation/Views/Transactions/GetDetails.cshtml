@@ -1,0 +1,25 @@
+﻿@model Payment_Simulation.Models.Transactions
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h1 class="mt-3">Transaction Details</h1>
+
+
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+           <label asp-for="Recipient.name">Name</label>
+        </dt>
+
+        <dd class="text-dark">
+            @Html.DisplayFor(model => model.Recipient.name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+</p>
