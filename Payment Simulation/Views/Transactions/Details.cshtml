@@ -1,0 +1,156 @@
+﻿@model TransactionsAssessment.Models.Transactions
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+
+
+<div>
+    <h4>Transaction</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PayeeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PayeeName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PayeePhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PayeePhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PayeeNationalID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PayeeNationalID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SourceAccount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SourceAccount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecipientName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecipientName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecipientPhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecipientPhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecipientNationalID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecipientNationalID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DestinationAccount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DestinationAccount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RouteID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RouteID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChannelType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChannelType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FeeAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FeeAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Reference)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Reference)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactionStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TransactionStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactionStatusDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TransactionStatusDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ResultCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ResultCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ResultCodeDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ResultCodeDescription)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TransactionID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
