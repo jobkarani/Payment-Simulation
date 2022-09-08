@@ -1,45 +1,88 @@
 ﻿@model IEnumerable<Payment_Simulation.Models.Transactions>
+
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.2/css/all.css" integrity="sha384-fZCoUih8XsaUZnNDOiLqnby1tMJ0sE7oBbNk2Xxf5x8Z4SvNQ9j83vFMa/erbVrV" crossorigin="anonymous"/>
 
 @{
+
     ViewData["Title"] = "Index";
+
 }
 
 <h1 class="mt-3">Transactions</h1>
+
 <hr>
 
 <p>
+
     <a class="btn btn-two" asp-action="Create"><i class="fa-solid fa-plus"></i> New Transfer</a>
+
 </p>
 
-
 @{
+
     ViewData["Title"] = "Transactions Page";
+
 }
+
  <link href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet" />
 
+
 <div class="container-full">
+
     <div class="table-responsive tab">
+
         <table id="transactionDatatable" class="table table-bordered table-striped">
+
             <thead>
+
                 <tr>
+
+                    @* <th>Created On</th> *@
+
                     <th>Remitter</th>
+
                     <th>Remitter's Account No</th>
+
                     <th>Remitter's Phone</th>
+
                     <th>Recipient</th>
+
                     <th>Recipient's Account No</th>
+
                     <th>Recipient's Phone</th>
+
                     <th>channelType</th>
+
                     <th>Amount</th>
-                    <th>Transaction Reference</th>
+
+                    <th>Charge Amount</th>
+
+                    <th>Tracking Number</th>
+
+                    <th>Result</th>
+
+                    <th>Status</th>
+
+                    <th>Reference</th>
+
                     <th>Action</th>
+
                 </tr>
+
             </thead>
+
         </table>
+
     </div>
+
 </div>
+
  @section Scripts
+
  {
+
      <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+
       <script src="~/js/transactionDatatable.js"></script>
+
  }
