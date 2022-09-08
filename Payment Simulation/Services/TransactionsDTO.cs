@@ -6,6 +6,7 @@ namespace Payment_Simulation.Services
     {
         [Key]
         public int Id { get; set; }
+        public DateTime TransactedOn { get; set; }
         public string routeId { get; set; }
         public string? originatorConversationId { get; set; }
         public float amount { get;  set; }

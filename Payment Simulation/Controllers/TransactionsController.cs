@@ -113,6 +113,13 @@ namespace Payment_Simulation.Controllers
             domainTransaction.amount = transaction.amount;
             domainTransaction.reference = transaction.reference;
             domainTransaction.channelType = transaction.channelType;
+            domainTransaction.TransactedOn = DateTime.Now;
+            
+            TransactionOutcomeDTO domainOutcome = new TransactionOutcomeDTO();
+            domainOutcome.feeAmount = transaction.feeAmount;
+            domainOutcome.resultCodeDescription = transaction.resultCodeDescription;
+            domainOutcome.transactionStatusDescription = transaction.transactionStatusDescription;
+
            
             // var token = GetToken();
 

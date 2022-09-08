@@ -24,6 +24,14 @@ namespace Payment_Simulation.Models
         
         public int channelType { get; set; }
 
+        [MaxLength(64)]
+        public string? transactionStatusDescription { get; set; }
+
+        [MaxLength(64)]
+        public string? resultCodeDescription { get; set; }
+
+        public double? feeAmount{ get; set; }
+
         public virtual Remitter Remitter { get; set; }
 
         public virtual Recipient Recipient { get; set; }
