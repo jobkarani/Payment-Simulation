@@ -45,6 +45,7 @@ namespace Payment_Simulation.Models
 
         [MaxLength(64)]
 
+        // public string 
         public string? trackingNumber { get; set; }
 
         public virtual Remitter Remitter { get; set; }

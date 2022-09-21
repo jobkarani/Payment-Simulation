@@ -236,7 +236,7 @@ namespace Payment_Simulation.Controllers
                     
                     domainTOutcome.trackingNumber = transaction.trackingNumber;
 
-                    
+                        
                     TransactionItem domainTransactionItem = new TransactionItem();
                     
                     domainTransactionItem.routeId = transaction.routeId.ToString();
@@ -283,9 +283,63 @@ namespace Payment_Simulation.Controllers
                     
                     RestResponse response = client.Execute(request);
                 
+
+                if (response.IsSuccessful)
+                {
+                    //Deserialize into an object
+                    var result = JsonConvert.DeserializeObject<OrderRequestDTO>(response.Content);
+
+                    transaction.SystemConversationId = result.message.systemConversationId;
+
+                    _context.Attach(transaction);
+
+                    _context.Entry(transaction).State = EntityState.Modified;
+
+                    _context.SaveChanges();
+
+
+                    //Call the "Find Payment Order By originatorConversationId" end point
+                    var originatorConversationId = result.message.originatorConversationId;
+
+                    //Console.WriteLine("HERE----: "+ originatorConversationId);
+
+                    var idType = "OriginatorConversationId";
+
+                    var FindRequest = new RestRequest("payment-order/check-status", Method.Get);
+
+                    FindRequest.AddHeader("authorization", "Bearer " + token.Result);
+
+                    FindRequest.AddParameter("id", originatorConversationId, ParameterType.QueryString);
+
+                    FindRequest.AddParameter("idType", idType, ParameterType.QueryString);
+
+                    var Findresponse = await _client.ExecuteAsync(FindRequest);
+
+                    //Deserialize into an object
+                    var FindResult = JsonConvert.DeserializeObject<FindDTO>(Findresponse.Content);
+
+                    //Update the database
+                    transaction.Fee = FindResult.orderLines[0].transactionOutcome.feeAmount;
+
+                    transaction.TrackingNumber = FindResult.orderLines[0].transactionOutcome.trackingNumber;
+
+                    transaction.StatusDescription = FindResult.orderLines[0].transactionOutcome.transactionStatusDescription;
+
+                    _context.SaveChanges();
+
+                    //transaction.OriginatorConversationId = result.message.originatorConversationId;
+
+                    //Console.WriteLine(originatorConversationId);
                 }
-                
-                return RedirectToAction(nameof(Index));
+                else
+                {
+                    Console.WriteLine("Payment Order Request failed with the following error: @{Error}", response.Content);
+
+                    throw new Exception(response.Content);
+                }
+            }
+
+            return RedirectToAction(nameof(Index));
                 
             }
 
@@ -389,7 +443,6 @@ namespace Payment_Simulation.Controllers
 
     }
 
-  
      public class PaymentOrderRequest
      {
             public string originatorConversationId {get; set;}
