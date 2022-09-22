@@ -363,7 +363,28 @@
 
                 <dd class="text-dark">
 
-                    @Html.DisplayFor(model => model.transactionStatusDescription)
+                    @Html.DisplayFor(model => model.statusDescription)
+
+                </dd>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+
+            <div class="col-md-4">
+
+                <dt>
+
+                <label asp-for="reference">Date</label>
+
+                </dt>
+
+                <dd class="text-dark">
+
+                        @Html.DisplayFor(model => model.dateCreated)
 
                 </dd>
 

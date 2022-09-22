@@ -12,8 +12,8 @@ using Payment_Simulation.Data;
 namespace Payment_Simulation.Migrations
 {
     [DbContext(typeof(TransactionsSimulation))]
-    [Migration("20220908063118_fourteenth")]
-    partial class fourteenth
+    [Migration("20220921134832_ONE")]
+    partial class ONE
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,7 +38,12 @@ namespace Payment_Simulation.Migrations
                     b.Property<int>("channelType")
                         .HasColumnType("int");
 
-                    b.Property<double?>("feeAmount")
+                    b.Property<string>("dateCreated")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<double>("feeAmount")
                         .HasColumnType("float");
 
                     b.Property<string>("originatorConversationId")
@@ -52,10 +57,16 @@ namespace Payment_Simulation.Migrations
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("resultCodeDescription")
+                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("routeId")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("statusDescription")
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
@@ -65,16 +76,126 @@ namespace Payment_Simulation.Migrations
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("trackingNumber")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("transactionStatusDescription")
+                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Transactions", (string)null);
+                });
+
+            modelBuilder.Entity("Payment_Simulation.Services.TransactionsDTO", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("RecipientAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RecipientEmailAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RecipientFinancialInstitution")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RecipientIdNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RecipientName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RecipientPhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RecipientPrimaryAccountNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RemitterAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RemitterFinancialInstitution")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RemitterIdNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RemitterName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RemitterPhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RemitterPrimaryAccountNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("TransactedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("amount")
+                        .HasColumnType("real");
+
+                    b.Property<int>("channelType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("customerAccountNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("emailAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("financialInstitution")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("idNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("originatorConversationId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("phoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("primaryAccountNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("reference")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("routeId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("systemConversationId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("systemTraceAuditNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TransactionsDTO");
                 });
 
             modelBuilder.Entity("Payment_Simulation.Models.Transactions", b =>

@@ -1,4 +1,4 @@
-﻿@model Payment_Simulation.Models.Transactions
+﻿@model Payment_Simulation.Services.TransactionsDTO
 
 @{
     
@@ -27,37 +27,37 @@
 
                 <div class="form-group">
 
-                    <input asp-for="Remitter.name" placeholder="Name" class="form-control" />
+                    <input asp-for="RemitterName" placeholder="Name" class="form-control" />
 
                 </div>
 
                 <div class="form-group">
 
-                    <input asp-for="Remitter.address" placeholder="Address" class="form-control" />
+                    <input asp-for="RemitterAddress" placeholder="Address" class="form-control" />
 
                 </div>
 
                 <div class="form-group">
 
-                    <input asp-for="Remitter.financialInstitution" placeholder="Bank" class="form-control" />
+                    <input asp-for="RemitterFinancialInstitution" placeholder="Bank" class="form-control" />
 
                 </div>
 
                 <div class="form-group">
 
-                    <input asp-for="Remitter.primaryAccountNumber" placeholder="Account Number" class="form-control" />
+                    <input asp-for="RemitterPrimaryAccountNumber" placeholder="Account Number" class="form-control" />
 
                 </div>
 
                 <div class="form-group">
 
-                    <input asp-for="Remitter.idNumber" placeholder="ID Number" class="form-control" />
+                    <input asp-for="RemitterIdNumber" placeholder="ID Number" class="form-control" />
 
                 </div>
 
                  <div class="form-group">
 
-                    <input asp-for="Remitter.phoneNumber" placeholder="PhoneNumber" class="form-control" />
+                    <input asp-for="RemitterPhoneNumber" placeholder="PhoneNumber" class="form-control" />
 
                 </div>
 
@@ -69,43 +69,43 @@
 
                     <div class="form-group">
 
-                        <input asp-for="Recipient.name" placeholder="Name" class="form-control" />
+                        <input asp-for="RecipientName" placeholder="Name" class="form-control" />
 
                     </div>
 
                     <div class="form-group">
 
-                        <input asp-for="Recipient.address" placeholder="Address" class="form-control" />
+                        <input asp-for="RecipientAddress" placeholder="Address" class="form-control" />
 
                     </div>
 
                      <div class="form-group">
 
-                        <input asp-for="Recipient.financialInstitution" placeholder="Bank" class="form-control" />
+                        <input asp-for="RecipientFinancialInstitution" placeholder="Bank" class="form-control" />
 
                     </div>
 
                     <div class="form-group">
 
-                    <input asp-for="Recipient.primaryAccountNumber" placeholder="Account Number" class="form-control" />
+                    <input asp-for="RecipientPrimaryAccountNumber" placeholder="Account Number" class="form-control" />
 
                     </div>
 
                     <div class="form-group">
 
-                    <input asp-for="Recipient.idNumber" placeholder="ID Number" class="form-control" />
+                    <input asp-for="RecipientIdNumber" placeholder="ID Number" class="form-control" />
 
                     </div>
 
                     <div class="form-group">
 
-                    <input asp-for="Recipient.phoneNumber" placeholder="Phone Number" class="form-control" />
+                    <input asp-for="RecipientPhoneNumber" placeholder="Phone Number" class="form-control" />
 
                     </div>
 
                     <div class="form-group">
 
-                    <input asp-for="Recipient.emailAddress" placeholder="Email" class="form-control" />
+                    <input asp-for="RecipientEmailAddress" placeholder="Email" class="form-control" />
 
                     </div>
 

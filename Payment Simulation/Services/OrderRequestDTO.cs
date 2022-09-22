@@ -11,10 +11,8 @@
             public DateTime timestamp { get; set; }
         }
 
-        public class Root
-        {
-            public Message message { get; set; }
-        }
+        
+         public Message message { get; set; }
 
     }
 }

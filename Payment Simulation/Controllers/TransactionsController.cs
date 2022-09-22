@@ -68,22 +68,28 @@ namespace Payment_Simulation.Controllers
         
             if (!string.IsNullOrEmpty(searchValue))
             {
-        
-                data = data.Where(x => x.Remitter.name.ToString().Contains(searchValue.ToLower())
-        
+
+                data = data.Where(x => x.dateCreated.ToString().Contains(searchValue.ToLower())
+
+                || x.Remitter.name.ToString().Contains(searchValue.ToLower())
+
                 || x.Remitter.primaryAccountNumber.ToString().Contains(searchValue.ToLower())
-        
+
                 || x.Recipient.name.ToString().Contains(searchValue.ToLower())
-        
+
                 || x.Recipient.primaryAccountNumber.ToString().Contains(searchValue.ToLower())
-        
+
                 || x.channelType.ToString().Contains(searchValue.ToLower())
-        
+
+                || x.trackingNumber.ToString().Contains(searchValue.ToLower())
+
+                || x.statusDescription.ToString().Contains(searchValue.ToLower())
+
                 || x.amount.ToString().Contains(searchValue.ToLower())
-        
+
                 || x.reference.ToLower().Contains(searchValue.ToLower())
-        
-                );
+
+                ); 
         
             }
 
@@ -132,92 +138,97 @@ namespace Payment_Simulation.Controllers
         
         [ValidateAntiForgeryToken]
         
-        public async Task<IActionResult> Create(Transactions transaction)
+        public async Task<IActionResult> Create(TransactionsDTO transaction)
         {
             
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
 
-            
+
             Remitter domainRemitter = new Remitter();
             
-            domainRemitter.address = transaction.Remitter.address;
+            domainRemitter.address = transaction.RemitterAddress;
             
-            domainRemitter.name = transaction.Remitter.name;
+            domainRemitter.name = transaction.RemitterName;
             
-            domainRemitter.phoneNumber = transaction.Remitter.phoneNumber;
+            domainRemitter.phoneNumber = transaction.RemitterPhoneNumber;
             
-            domainRemitter.idNumber = transaction.Remitter.idNumber;
+            domainRemitter.idNumber = transaction.RecipientIdNumber;
             
-            domainRemitter.financialInstitution = transaction.Remitter.financialInstitution;
+            domainRemitter.financialInstitution = transaction.RecipientFinancialInstitution;
             
-            domainRemitter.primaryAccountNumber = transaction.Remitter.primaryAccountNumber;
+            domainRemitter.primaryAccountNumber = transaction.RemitterPrimaryAccountNumber;
 
             
             Recipient domainRecipient = new Recipient();
             
-            domainRecipient.name= transaction.Recipient.name;
+            domainRecipient.name= transaction.RecipientName;
             
-            domainRecipient.address= transaction.Recipient.address;
+            domainRecipient.address= transaction.RecipientAddress;
             
-            domainRecipient.phoneNumber = transaction.Recipient.phoneNumber;
+            domainRecipient.phoneNumber = transaction.RecipientPhoneNumber;
             
-            domainRecipient.idNumber = transaction.Recipient.idNumber;
+            domainRecipient.idNumber = transaction.RecipientIdNumber;
             
-            domainRecipient.primaryAccountNumber = transaction.Recipient.primaryAccountNumber;
+            domainRecipient.primaryAccountNumber = transaction.RecipientPrimaryAccountNumber;
             
-            domainRecipient.emailAddress = transaction.Recipient.emailAddress;
+            domainRecipient.emailAddress = transaction.RecipientEmailAddress;
             
-            domainRecipient.financialInstitution = transaction.Recipient.financialInstitution;
+            domainRecipient.financialInstitution = transaction.RecipientFinancialInstitution;
 
 
-            TransactionsDTO domainTransaction = new TransactionsDTO();
+            Transactions domainTransaction = new Transactions();
+
+            domainTransaction.Remitter = domainRemitter;
+
+            domainTransaction.Recipient = domainRecipient;
             
             domainTransaction.routeId = transaction.routeId;
 
             domainTransaction.amount = transaction.amount;
             
             domainTransaction.reference = transaction.reference;
-            
-            domainTransaction.channelType = transaction.channelType;
-            
-            domainTransaction.TransactedOn = DateTime.Now;
 
-            
-            TransactionOutcomeDTO domainOutcome = new TransactionOutcomeDTO();
-            
-            domainOutcome.feeAmount = transaction.feeAmount;
-            
-            domainOutcome.resultCodeDescription = transaction.resultCodeDescription;
-            
-            domainOutcome.transactionStatusDescription = transaction.transactionStatusDescription;
-            
-            domainOutcome.trackingNumber = transaction.trackingNumber;
+            domainTransaction.systemConversationId = transaction.systemConversationId;
+
+            domainTransaction.originatorConversationId = transaction.originatorConversationId;
+
+            domainTransaction.channelType = transaction.channelType;
+
+            domainTransaction.dateCreated = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+
+            domainTransaction.feeAmount = 0.0;
+
+            domainTransaction.resultCodeDescription = string.Empty;
+
+            domainTransaction.statusDescription = string.Empty;
+
+            domainTransaction.trackingNumber = string.Empty;
 
            
             // var token = GetToken();
 
             if (ModelState.IsValid)
             {
-                _context.Add(transaction);
+                _context.Add(domainTransaction);
 
                 if(await _context.SaveChangesAsync() > 0)
                 {
 
                     RecipientItem domainRecipientItem = new RecipientItem();
                     
-                    domainRecipientItem.name = transaction.Recipient.name;
+                    domainRecipientItem.name = transaction.name;
                     
-                    domainRecipientItem.address = transaction.Recipient.address;
+                    domainRecipientItem.address = transaction.address;
                     
-                    domainRecipientItem.phoneNumber = transaction.Recipient.phoneNumber;
+                    domainRecipientItem.phoneNumber = transaction.phoneNumber;
                     
-                    domainRecipientItem.idNumber = transaction.Recipient.idNumber;
+                    domainRecipientItem.idNumber = transaction.idNumber;
                     
-                    domainRecipientItem.emailAddress = transaction.Recipient.emailAddress;
+                    domainRecipientItem.emailAddress = transaction.emailAddress;
                     
-                    domainRecipientItem.financialInstitution = transaction.Recipient.financialInstitution;
+                    domainRecipientItem.financialInstitution = transaction.financialInstitution;
                     
-                    domainRecipientItem.primaryAccountNumber = transaction.Recipient.primaryAccountNumber;
+                    domainRecipientItem.primaryAccountNumber = transaction.primaryAccountNumber;
                     
                     domainRecipientItem.ccy = 404;
                     
@@ -226,15 +237,13 @@ namespace Payment_Simulation.Controllers
                     domainRecipientItem.mccmnc = "63902";
 
                     
-                    TransactionOutcomeDTO domainTOutcome = new TransactionOutcomeDTO();
+                    /*TransactionOutcomeDTO domainTOutcome = new TransactionOutcomeDTO();
                     
                     domainTOutcome.feeAmount = transaction.feeAmount;
                     
-                    domainOutcome.resultCodeDescription = transaction.resultCodeDescription;
+                    domainTOutcome.resultCodeDescription = transaction.resultCodeDescription;
                     
-                    domainOutcome.transactionStatusDescription = transaction.transactionStatusDescription;
-                    
-                    domainTOutcome.trackingNumber = transaction.trackingNumber;
+                    domainTOutcome.trackingNumber = transaction.trackingNumber;*/
 
                         
                     TransactionItem domainTransactionItem = new TransactionItem();
@@ -284,60 +293,55 @@ namespace Payment_Simulation.Controllers
                     RestResponse response = client.Execute(request);
                 
 
-                if (response.IsSuccessful)
-                {
-                    //Deserialize into an object
-                    var result = JsonConvert.DeserializeObject<OrderRequestDTO>(response.Content);
+                    if (response.IsSuccessful)
+                    {
+                        //Deserialize into an object
+                        var result = JsonConvert.DeserializeObject<OrderRequestDTO>(response.Content);
 
-                    transaction.SystemConversationId = result.message.systemConversationId;
+                        transaction.systemConversationId = result.message.systemConversationId;
 
-                    _context.Attach(transaction);
+                        _context.Attach(transaction);
 
-                    _context.Entry(transaction).State = EntityState.Modified;
+                        _context.Entry(transaction).State = EntityState.Modified;
 
-                    _context.SaveChanges();
+                        _context.SaveChanges();
 
 
-                    //Call the "Find Payment Order By originatorConversationId" end point
-                    var originatorConversationId = result.message.originatorConversationId;
+                        // Find Payment Order By originatorConversationId" end point
 
-                    //Console.WriteLine("HERE----: "+ originatorConversationId);
+                        var originatorConversationId = result.message.originatorConversationId;
 
-                    var idType = "OriginatorConversationId";
 
-                    var FindRequest = new RestRequest("payment-order/check-status", Method.Get);
+                        var idType = "OriginatorConversationId";
 
-                    FindRequest.AddHeader("authorization", "Bearer " + token.Result);
+                        var Client = new RestClient("https://sandboxapi.zamupay.com/v1/");
 
-                    FindRequest.AddParameter("id", originatorConversationId, ParameterType.QueryString);
+                        var Request = new RestRequest("payment-order/check-status", Method.Get);
 
-                    FindRequest.AddParameter("idType", idType, ParameterType.QueryString);
+                        Request.AddHeader("authorization", "Bearer " + token.Result);
 
-                    var Findresponse = await _client.ExecuteAsync(FindRequest);
+                        Request.AddParameter("id", originatorConversationId, ParameterType.QueryString);
 
-                    //Deserialize into an object
-                    var FindResult = JsonConvert.DeserializeObject<FindDTO>(Findresponse.Content);
+                        Request.AddParameter("idType", idType, ParameterType.QueryString);
 
-                    //Update the database
-                    transaction.Fee = FindResult.orderLines[0].transactionOutcome.feeAmount;
+                        var Response = await Client.ExecuteAsync(Request);
 
-                    transaction.TrackingNumber = FindResult.orderLines[0].transactionOutcome.trackingNumber;
 
-                    transaction.StatusDescription = FindResult.orderLines[0].transactionOutcome.transactionStatusDescription;
+                        //Deserialize into an object
+                        var Outcome = JsonConvert.DeserializeObject<FindPaymentOrderDTO>(Response.Content);
 
-                    _context.SaveChanges();
+                        //Update the database
+                        domainTransaction.feeAmount = Outcome.orderLines[0].transactionOutcome.feeAmount;
 
-                    //transaction.OriginatorConversationId = result.message.originatorConversationId;
+                        domainTransaction.trackingNumber = Outcome.orderLines[0].transactionOutcome.trackingNumber;
 
-                    //Console.WriteLine(originatorConversationId);
+                        domainTransaction.statusDescription = Outcome.orderLines[0].transactionOutcome.transactionStatusDescription;
+
+                        _context.SaveChanges();
+
+                    }
+                    
                 }
-                else
-                {
-                    Console.WriteLine("Payment Order Request failed with the following error: @{Error}", response.Content);
-
-                    throw new Exception(response.Content);
-                }
-            }
 
             return RedirectToAction(nameof(Index));
                 

@@ -11,6 +11,10 @@ namespace Payment_Simulation.Models
 
         [MaxLength(64)]
 
+        public string dateCreated { get; set; }
+
+        [MaxLength(64)]
+
         public string routeId { get; set; }
 
         [MaxLength(64)]
@@ -35,18 +39,17 @@ namespace Payment_Simulation.Models
 
         [MaxLength(64)]
 
-        public string? transactionStatusDescription { get; set; }
+        public string resultCodeDescription { get; set; }
+
+        public double feeAmount{ get; set; }
 
         [MaxLength(64)]
 
-        public string? resultCodeDescription { get; set; }
-
-        public double? feeAmount{ get; set; }
+        public string statusDescription { get; set; }
 
         [MaxLength(64)]
 
-        // public string 
-        public string? trackingNumber { get; set; }
+        public string trackingNumber { get; set; }
 
         public virtual Remitter Remitter { get; set; }
 
@@ -54,12 +57,20 @@ namespace Payment_Simulation.Models
 
         public Transactions() {}
 
-        public Transactions(int Id, string routeId, string systemConversationId, string originatorConversationId, float amount, string reference, int channelType, Remitter Remitter, Recipient Recipient)
+        public Transactions(int Id, string routeId, string resultCodeDescription, string statusDescription, double feeAmount, string systemConversationId,string dateCreated, string originatorConversationId, float amount, string reference, int channelType, Remitter Remitter, Recipient Recipient)
         {
             
             this.Id = Id;
             
             this.routeId = routeId;
+
+            this.dateCreated = dateCreated;
+
+            this.resultCodeDescription = resultCodeDescription;
+
+            this.statusDescription = statusDescription;
+
+            this.feeAmount = feeAmount; 
             
             this.systemConversationId = systemConversationId;
             

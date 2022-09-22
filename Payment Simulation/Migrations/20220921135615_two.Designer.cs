@@ -11,8 +11,8 @@ using Payment_Simulation.Data;
 namespace Payment_Simulation.Migrations
 {
     [DbContext(typeof(TransactionsSimulation))]
-    [Migration("20220907080543_ten")]
-    partial class ten
+    [Migration("20220921135615_two")]
+    partial class two
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,14 @@ namespace Payment_Simulation.Migrations
                     b.Property<int>("channelType")
                         .HasColumnType("int");
 
+                    b.Property<string>("dateCreated")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<double>("feeAmount")
+                        .HasColumnType("float");
+
                     b.Property<string>("originatorConversationId")
                         .IsRequired()
                         .HasMaxLength(64)
@@ -47,12 +55,27 @@ namespace Payment_Simulation.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
+                    b.Property<string>("resultCodeDescription")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
                     b.Property<string>("routeId")
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
+                    b.Property<string>("statusDescription")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
                     b.Property<string>("systemConversationId")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("trackingNumber")
+                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 

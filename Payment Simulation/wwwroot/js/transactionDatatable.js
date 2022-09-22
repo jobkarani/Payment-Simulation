@@ -20,7 +20,7 @@
 
                 columns: [
 
-                    // { data: "transactedOn", name: "TransactedOn" },
+                    { data: "dateCreated", name: "dateCreated" },
 
                     { data: "remitter.name", name: "Remitter.name" },
 
@@ -40,9 +40,7 @@
 
                     { data: "feeAmount", name: "feeAmount"},
 
-                    { data: "resultCodeDescription", name: "resultCodeDescription"},
-
-                    { data: "transactionStatusDescription", name: "transactionStatusDescription"},
+                    { data: "statusDescription", name: "statusDescription"},
 
                     { data: "trackingNumber", name: "trackingNumber"},
 
