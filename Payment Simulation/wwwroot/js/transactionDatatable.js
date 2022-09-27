@@ -40,23 +40,25 @@
 
                     { data: "feeAmount", name: "feeAmount"},
 
-                    { data: "statusDescription", name: "statusDescription"},
+                    { data: "trackingNumber", name: "trackingNumber" },
 
-                    { data: "trackingNumber", name: "trackingNumber"},
+                    { data: "statusDescription", name: "statusDescription"},
 
                     { data: "reference", name: "reference" },
 
-                    { data:"channelType", name:"Action"},
+                    { data:"dateCreated", name:"Action"}
 
                 ],
 
                 "fnRowCallback": function(nRow, aData){
 
-                    $("td:eq(13)",nRow).html('<a class="job" href="/Transactions/GetDetails?id='+ aData.id + '"> View <a/>');
+                    $("td:eq(14)",nRow).html('<a class="job" href="/Transactions/GetDetails?id='+ aData.id + '"> View <a/>');
 
                     return nRow;
 
                 },
+
+                
 
             }
 

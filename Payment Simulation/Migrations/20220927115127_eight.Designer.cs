@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Payment_Simulation.Data;
 
@@ -10,9 +11,10 @@ using Payment_Simulation.Data;
 namespace Payment_Simulation.Migrations
 {
     [DbContext(typeof(TransactionsSimulation))]
-    partial class TransactionsSimulationModelSnapshot : ModelSnapshot
+    [Migration("20220927115127_eight")]
+    partial class eight
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,6 +38,7 @@ namespace Payment_Simulation.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("channelTypeDescription")
+                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 

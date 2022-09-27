@@ -11,86 +11,86 @@ using System.Net;
 
 namespace Payment_Simulation.Controllers
 {
-   
+
     public class TransactionsController : Controller
     {
-       
+
         private readonly TransactionsSimulation _context;
-        
+
         public Task<string> token;
 
         public TransactionsController(TransactionsSimulation context)
         {
-        
+
             _context = context;
-        
+
             token = GetToken();
-        
+
         }
 
         // GET: Transactions/Table
         public IActionResult Index()
         {
-        
+
             return View();
-        
+
         }
 
 
         [HttpPost]
-        
+
         public IActionResult GetTransactions()
         {
-        
+
             int totalRecord = 0;
-        
+
             int filterRecord = 0;
-        
+
             var draw = Request.Form["draw"].FirstOrDefault();
-        
+
             var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
-        
+
             var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
-        
+
             var searchValue = Request.Form["search[value]"].FirstOrDefault();
-        
+
             int pageSize = Convert.ToInt32(Request.Form["length"].FirstOrDefault() ?? "0");
-        
+
             int skip = Convert.ToInt32(Request.Form["start"].FirstOrDefault() ?? "0");
-        
+
             var data = _context.Set<Transactions>().AsQueryable();
-        
+
             //get total count of data in table
-        
+
             totalRecord = data.Count();
-        
+
             // search data when search value found
-        
+
             if (!string.IsNullOrEmpty(searchValue))
             {
 
-                data = data.Where(x => x.dateCreated.ToString().Contains(searchValue.ToLower())
+                data = data.Where(x => x.dateCreated.ToLower().Contains(searchValue.ToLower())
 
-                || x.Remitter.name.ToString().Contains(searchValue.ToLower())
+                || x.Remitter.name.ToLower().Contains(searchValue.ToLower())
 
-                || x.Remitter.primaryAccountNumber.ToString().Contains(searchValue.ToLower())
+                || x.Remitter.primaryAccountNumber.ToLower().Contains(searchValue.ToLower())
 
-                || x.Recipient.name.ToString().Contains(searchValue.ToLower())
+                || x.Recipient.name.ToLower().Contains(searchValue.ToLower())
 
-                || x.Recipient.primaryAccountNumber.ToString().Contains(searchValue.ToLower())
+                || x.Recipient.primaryAccountNumber.ToLower().Contains(searchValue.ToLower())
 
                 || x.channelType.ToString().Contains(searchValue.ToLower())
 
-                || x.trackingNumber.ToString().Contains(searchValue.ToLower())
+                || x.trackingNumber.ToLower().Contains(searchValue.ToLower())
 
-                || x.statusDescription.ToString().Contains(searchValue.ToLower())
+                || x.statusDescription.ToLower().Contains(searchValue.ToLower())
 
-                || x.amount.ToString().Contains(searchValue.ToLower())
+                || x.amount.ToString().ToLower().Contains(searchValue.ToLower())
 
                 || x.reference.ToLower().Contains(searchValue.ToLower())
 
-                ); 
-        
+                );
+
             }
 
             // get total count of records after search
@@ -127,52 +127,52 @@ namespace Payment_Simulation.Controllers
 
         public async Task<IActionResult> Create()
         {
-            
+
             return View();
-        
+
         }
 
         // POST: Transactions/Create
-        
+
         [HttpPost]
-        
+
         [ValidateAntiForgeryToken]
-        
+
         public async Task<IActionResult> Create(TransactionsDTO transaction)
         {
-            
+
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
 
 
             Remitter domainRemitter = new Remitter();
-            
+
             domainRemitter.address = transaction.RemitterAddress;
-            
+
             domainRemitter.name = transaction.RemitterName;
-            
+
             domainRemitter.phoneNumber = transaction.RemitterPhoneNumber;
-            
+
             domainRemitter.idNumber = transaction.RecipientIdNumber;
-            
+
             domainRemitter.financialInstitution = transaction.RecipientFinancialInstitution;
-            
+
             domainRemitter.primaryAccountNumber = transaction.RemitterPrimaryAccountNumber;
 
-            
+
             Recipient domainRecipient = new Recipient();
-            
-            domainRecipient.name= transaction.RecipientName;
-            
-            domainRecipient.address= transaction.RecipientAddress;
-            
+
+            domainRecipient.name = transaction.RecipientName;
+
+            domainRecipient.address = transaction.RecipientAddress;
+
             domainRecipient.phoneNumber = transaction.RecipientPhoneNumber;
-            
+
             domainRecipient.idNumber = transaction.RecipientIdNumber;
-            
+
             domainRecipient.primaryAccountNumber = transaction.RecipientPrimaryAccountNumber;
-            
+
             domainRecipient.emailAddress = transaction.RecipientEmailAddress;
-            
+
             domainRecipient.financialInstitution = transaction.RecipientFinancialInstitution;
 
 
@@ -181,11 +181,11 @@ namespace Payment_Simulation.Controllers
             domainTransaction.Remitter = domainRemitter;
 
             domainTransaction.Recipient = domainRecipient;
-            
+
             domainTransaction.routeId = transaction.routeId;
 
             domainTransaction.amount = transaction.amount;
-            
+
             domainTransaction.reference = transaction.reference;
 
             domainTransaction.systemConversationId = transaction.systemConversationId;
@@ -193,6 +193,8 @@ namespace Payment_Simulation.Controllers
             domainTransaction.originatorConversationId = transaction.originatorConversationId;
 
             domainTransaction.channelType = transaction.channelType;
+
+            domainTransaction.channelTypeDescription = transaction.channelTypeDescription;
 
             domainTransaction.dateCreated = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
 
@@ -204,105 +206,114 @@ namespace Payment_Simulation.Controllers
 
             domainTransaction.trackingNumber = string.Empty;
 
-           
+
             // var token = GetToken();
 
             if (ModelState.IsValid)
             {
                 _context.Add(domainTransaction);
 
-                if(await _context.SaveChangesAsync() > 0)
+                if (await _context.SaveChangesAsync() > 0)
                 {
 
                     RecipientItem domainRecipientItem = new RecipientItem();
-                    
-                    domainRecipientItem.name = transaction.name;
-                    
-                    domainRecipientItem.address = transaction.address;
-                    
-                    domainRecipientItem.phoneNumber = transaction.phoneNumber;
-                    
-                    domainRecipientItem.idNumber = transaction.idNumber;
-                    
-                    domainRecipientItem.emailAddress = transaction.emailAddress;
-                    
-                    domainRecipientItem.financialInstitution = transaction.financialInstitution;
-                    
-                    domainRecipientItem.primaryAccountNumber = transaction.primaryAccountNumber;
-                    
+
+                    domainRecipientItem.name = transaction.RecipientName;
+
+                    domainRecipientItem.address = transaction.RecipientAddress;
+
+                    domainRecipientItem.phoneNumber = transaction.RecipientPhoneNumber;
+
+                    domainRecipientItem.idNumber = transaction.RecipientIdNumber;
+
+                    domainRecipientItem.emailAddress = transaction.RecipientEmailAddress;
+
+                    domainRecipientItem.financialInstitution = transaction.RecipientFinancialInstitution;
+
+                    domainRecipientItem.primaryAccountNumber = transaction.RecipientPrimaryAccountNumber;
+
                     domainRecipientItem.ccy = 404;
-                    
+
                     domainRecipientItem.country = "KE";
-                    
+
                     domainRecipientItem.mccmnc = "63902";
 
-                    
-                    /*TransactionOutcomeDTO domainTOutcome = new TransactionOutcomeDTO();
-                    
-                    domainTOutcome.feeAmount = transaction.feeAmount;
-                    
-                    domainTOutcome.resultCodeDescription = transaction.resultCodeDescription;
-                    
-                    domainTOutcome.trackingNumber = transaction.trackingNumber;*/
 
-                        
+                    RemitterDetails domainRemitterItem = new RemitterDetails();
+
+                    domainRemitterItem.name = transaction.RemitterName;
+
+                    domainRemitterItem.address = transaction.RemitterAddress;
+
+                    domainRemitterItem.phoneNumber = transaction.RemitterPhoneNumber;
+
+                    domainRemitterItem.idNumber = transaction.RemitterIdNumber;
+
+                    domainRemitterItem.financialInstitution = transaction.RemitterFinancialInstitution;
+
+                    domainRemitterItem.primaryAccountNumber = transaction.RemitterPrimaryAccountNumber;
+
+
                     TransactionItem domainTransactionItem = new TransactionItem();
-                    
-                    domainTransactionItem.routeId = transaction.routeId.ToString();
-                    
+
+                    domainTransactionItem.routeId = transaction.routeId;
+
                     domainTransactionItem.ChannelType = transaction.channelType;
-                    
+
                     domainTransactionItem.amount = Convert.ToInt32(transaction.amount);
-                    
+
                     domainTransactionItem.reference = transaction.reference;
-                    
+
                     domainTransactionItem.systemTraceAuditNumber = Guid.NewGuid().ToString();
 
-                    
-                    RecipientDetails domainRecipientDetails = new RecipientDetails();
-                    
+
+                    Paymentorderline domainRecipientDetails = new Paymentorderline();
+
                     domainRecipientDetails.recipient = domainRecipientItem;
-                    
+
+                    domainRecipientDetails.remitter = domainRemitterItem;
+
                     domainRecipientDetails.transaction = domainTransactionItem;
 
-                    
-                    PaymentOrderRequest domainPaymentOrderRequest = new PaymentOrderRequest();
-                    
-                    domainPaymentOrderRequest.originatorConversationId = transaction.originatorConversationId;
-                    
+
+                    PaymentRequestDTO domainPaymentOrderRequest = new PaymentRequestDTO();
+
+                    domainPaymentOrderRequest.originatorConversationId = domainTransaction.originatorConversationId;
+
                     domainPaymentOrderRequest.paymentNotes = "Debt payment";
-                    
-                    domainPaymentOrderRequest.paymentOrderLines = new List<RecipientDetails>
-                    
+
+                    domainPaymentOrderRequest.paymentOrderLines = new List<Paymentorderline>
+
                     {
-                    
+
                         domainRecipientDetails
-                    
-                    } ;
-                    
+
+                    };
+
                     var client = new RestClient("https://sandboxapi.zamupay.com/v1/");
-                    
+
                     var request = new RestRequest("payment-order/new-order", Method.Post);
-                    
+
                     request.AddHeader("Content-Type", "application/json");
-                    
+
                     request.AddHeader("authorization", "Bearer " + token.Result);
-                    
+
                     request.AddParameter("application/json", JsonConvert.SerializeObject(domainPaymentOrderRequest), ParameterType.RequestBody);
-                    
+
                     RestResponse response = client.Execute(request);
-                
+
 
                     if (response.IsSuccessful)
                     {
                         //Deserialize into an object
+
                         var result = JsonConvert.DeserializeObject<OrderRequestDTO>(response.Content);
 
                         transaction.systemConversationId = result.message.systemConversationId;
 
-                        _context.Attach(transaction);
+                        _context.Attach(domainTransaction);
 
-                        _context.Entry(transaction).State = EntityState.Modified;
+                        _context.Entry(domainTransaction).State = EntityState.Modified;
 
                         _context.SaveChanges();
 
@@ -340,11 +351,11 @@ namespace Payment_Simulation.Controllers
                         _context.SaveChanges();
 
                     }
-                    
+
                 }
 
-            return RedirectToAction(nameof(Index));
-                
+                return RedirectToAction(nameof(Index));
+
             }
 
             return View(transaction);
@@ -358,52 +369,52 @@ namespace Payment_Simulation.Controllers
         [NonAction]
         public async Task<string> GetToken()
         {
-            
+
             var client = new RestClient("http://54.224.92.175:10001/");
 
             var request = new RestRequest("connect/token", Method.Post);
 
-            string client_id = "Flavian"  ;
+            string client_id = "Flavian";
 
-            string client_secret = "a3cfa964-30ad-469a-b1e2-bdf220f69acc"     ;
+            string client_secret = "a3cfa964-30ad-469a-b1e2-bdf220f69acc";
 
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
 
             request.AddParameter("application/x-www-form-urlencoded", $"grant_type=client_credentials&client_id={client_id}&client_secret={client_secret}", ParameterType.RequestBody);
-            
+
             RestResponse response = client.Execute(request);
 
             if (response.IsSuccessful)
             {
-                
+
                 var auth = JsonConvert.DeserializeObject<RequestTokenDTO>(response.Content);
-                
+
                 return auth.access_token;
-            
+
             }
-            
+
             else
             {
-                
+
                 Console.WriteLine("Authorization token request failed with the following error: @{Error}", response.Content);
-                
+
                 throw new Exception(response.Content);
-            
+
             }
         }
 
         [HttpGet]
-        
+
         public async Task<JsonResult> GetRoutes()
         {
-        
+
             var client = new RestClient("https://sandboxapi.zamupay.com/v1/");
-        
+
             var request = new RestRequest("transaction-routes/assigned-routes", Method.Get);
-        
+
             request.AddHeader("Authorization", "Bearer " + token.Result);
-        
-            RestResponse response =  client.Execute(request);
+
+            RestResponse response = client.Execute(request);
 
             List<ChannelTypeDTO> selectItems = new List<ChannelTypeDTO>();
 
@@ -435,50 +446,16 @@ namespace Payment_Simulation.Controllers
 
         }
 
-        public async Task<IActionResult> GetDetails(int id){
+        public async Task<IActionResult> GetDetails(int id)
+        {
 
-        Transactions transactions = await _context.Transactions.FindAsync(id);
+            Transactions transactions = await _context.Transactions.FindAsync(id);
 
-        Console.WriteLine(id);
+            Console.WriteLine(id);
 
-        return View(transactions);
-        
+            return View(transactions);
+
+        }
+
     }
-
-    }
-
-     public class PaymentOrderRequest
-     {
-            public string originatorConversationId {get; set;}
-            public string paymentNotes{get; set;}
-            public List<RecipientDetails> paymentOrderLines{get; set;}
-        }
-
-        public class RecipientDetails{
-            public RecipientItem recipient{get; set;}
-            public TransactionItem transaction{get; set;}
-        }
-
-        public class RecipientItem{
-            public string name { get; set; }
-            public string address { get; set; }
-            public string emailAddress { get; set; }
-            public string phoneNumber { get; set; }
-            public string idType { get; set; }
-            public string idNumber { get; set; }
-            public string financialInstitution { get; set; }
-            public string primaryAccountNumber { get; set; }
-            public string mccmnc { get; set; }
-            public int ccy { get; set; }
-            public string country { get; set; }
-            public string purpose { get; set; }
-        }
-
-        public class TransactionItem{
-            public string routeId { get; set; }
-            public int ChannelType { get; set; }
-            public int amount { get; set; }
-            public string reference { get; set; }
-            public string systemTraceAuditNumber { get; set; }
-        }
 }

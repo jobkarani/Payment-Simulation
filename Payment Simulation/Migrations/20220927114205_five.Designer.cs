@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Payment_Simulation.Data;
 
@@ -10,9 +11,10 @@ using Payment_Simulation.Data;
 namespace Payment_Simulation.Migrations
 {
     [DbContext(typeof(TransactionsSimulation))]
-    partial class TransactionsSimulationModelSnapshot : ModelSnapshot
+    [Migration("20220927114205_five")]
+    partial class five
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,12 +34,13 @@ namespace Payment_Simulation.Migrations
                     b.Property<float>("amount")
                         .HasColumnType("real");
 
-                    b.Property<int>("channelType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("channelTypeDescription")
+                    b.Property<string>("channelDescription")
+                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
+
+                    b.Property<int>("channelType")
+                        .HasColumnType("int");
 
                     b.Property<string>("dateCreated")
                         .IsRequired()

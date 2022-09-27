@@ -23,6 +23,8 @@ namespace Payment_Simulation.Services
         public string? reference { get;  set; }
     
         public int channelType { get;  set; }
+
+        public string? channelTypeDescription { get; set; }
     
         public string? customerAccountNo { get;  set; }
     
@@ -72,7 +74,6 @@ namespace Payment_Simulation.Services
 
         public string RecipientEmailAddress { get; set; }
 
-    
     }
 
 }

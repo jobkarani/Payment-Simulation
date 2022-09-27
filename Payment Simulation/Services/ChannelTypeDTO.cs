@@ -10,6 +10,8 @@ namespace Payment_Simulation.Services
 
         public string channelType { get; set; }
 
+        public string channelDescription { get; set; }
+
     }
 
 }

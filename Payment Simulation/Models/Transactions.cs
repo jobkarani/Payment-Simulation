@@ -39,6 +39,10 @@ namespace Payment_Simulation.Models
 
         [MaxLength(64)]
 
+        public string? channelTypeDescription { get; set; }
+
+        [MaxLength(64)]
+
         public string resultCodeDescription { get; set; }
 
         public double feeAmount{ get; set; }
